@@ -1,6 +1,7 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import { Notification } from "./Notification";
+import * as Velocity from "velocity-animate";
 
 const stringCard = 'Card';
 
@@ -28,7 +29,7 @@ export class Card extends Control<ICardOptions> {
     loader: HTMLElement;
     body: HTMLElement;
 
-    private static defaults: ICardOptions = {
+    public static defaultProps: ICardOptions = {
         progress: 'circle',
         progressColor: 'master',
         refresh: false,
@@ -55,6 +56,10 @@ export class Card extends Control<ICardOptions> {
         this.bind();
     }
 
+    private isAnchor = (element: EventTarget): boolean => {
+        return (<HTMLElement>element).nodeName === 'A';
+    };
+
     private bind = () => {
         // init events 
         if (!(stringCard in this.element)) {
@@ -67,7 +72,7 @@ export class Card extends Control<ICardOptions> {
 
             if (btnCollapse){
                 pg.on(btnCollapse, 'click', function(e) {
-                    if (e.currentTarget.nodeName === 'A') {
+                    if (self.isAnchor(e.currentTarget)) {
                         e.preventDefault();
                     }
 
@@ -77,7 +82,7 @@ export class Card extends Control<ICardOptions> {
 
             if (btnClose){
                 pg.on(btnClose, 'click', function(e) {
-                    if(e.currentTarget.nodeName === 'A') {
+                    if (self.isAnchor(e.currentTarget)) {
                         e.preventDefault();
                     }
 
@@ -87,7 +92,7 @@ export class Card extends Control<ICardOptions> {
 
             if (btnRefresh){
                 pg.on(btnRefresh, 'click', function(e) {
-                    if(e.currentTarget.nodeName === 'A') {
+                    if (self.isAnchor(e.currentTarget)) {
                         e.preventDefault();
                     }
 
@@ -97,7 +102,7 @@ export class Card extends Control<ICardOptions> {
 
             if (btnMaximize){
                 pg.on(btnMaximize, 'click', function(e) {
-                    if(e.currentTarget.nodeName === 'A') {
+                    if (self.isAnchor(e.currentTarget)) {
                         e.preventDefault();
                     }
 
@@ -113,10 +118,10 @@ export class Card extends Control<ICardOptions> {
         var icon = this.element.querySelector<HTMLElement>(this.options.collapseButton + ' > i');
         var heading = this.element.querySelector('.card-header');
   
-        if (pg.hasClass(this.element,'card-collapsed')) {
+        if (pg.hasClass(this.element, 'card-collapsed')) {
             Velocity.animate(this.body, "slideDown", { 
                 duration: 200,
-                complete:function(){ } 
+                complete: function(){ }
             });
 
             pg.removeClass(this.element,'card-collapsed');
@@ -131,10 +136,10 @@ export class Card extends Control<ICardOptions> {
 
             return;
         } else {
-          Velocity.animate(this.body, "slideUp", { 
-              duration: 200,
-              complete:function(){ } 
-           });
+            Velocity.animate(this.body, "slideUp", { 
+                duration: 200,
+                complete: function(){ } 
+            });
         }
 
         pg.addClass(this.element,'card-collapsed');
@@ -227,23 +232,16 @@ export class Card extends Control<ICardOptions> {
                 elem.appendChild(child);
             } else if (this.options.progress == 'circle-lg') {
                 pg.addClass(toggle,'refreshing');
-                var iconOld = toggle.querySelector<HTMLElement>('> i');
-                var iconNew;
+                const iconOld = toggle.querySelector<HTMLElement>('i');
 
-                let el = toggle.querySelector('[class$="-animated"]');
+                let iconNew = <HTMLElement>toggle.querySelector('[class$="-animated"]');
 
-                if (!el) {
+                if (!iconNew) {
                     iconNew = document.createElement("i");
                     iconNew.style.position = "absolute";
-                    iconNew.style.top = "absolute";
-                    iconNew.style.left = "absolute";
-  
-                    var rect = window.getComputedStyle(iconOld, null);
-                    iconNew.css({
-                        'position': 'absolute',
-                        'top': rect.top + "px",
-                        'left': rect.left + "px"
-                    });
+                    iconNew.style.top = iconOld.offsetTop + "px";
+                    iconNew.style.left = iconOld.offsetLeft + "px";
+                    
                     pg.addClass(iconNew,'card-icon-refresh-lg-' + this.options.progressColor + '-animated');
                     toggle.appendChild(iconNew);
                 } else {
@@ -252,8 +250,6 @@ export class Card extends Control<ICardOptions> {
   
                 pg.addClass(iconOld,'fade');
                 pg.addClass(iconNew,'active');
-  
-  
             } else {
                 elem.className = "progress progress-small";
                 var child = document.createElement("div");
@@ -274,7 +270,8 @@ export class Card extends Control<ICardOptions> {
   
             Velocity.animate(this.loader, "fadeIn", { 
                 duration: 200,
-                complete: () => {} 
+                complete: function() {
+                }
             });
   
             if (this.options.onRefresh) {
@@ -285,7 +282,7 @@ export class Card extends Control<ICardOptions> {
             const self = this;
             Velocity.animate(this.loader, "fadeOut", { 
               duration: 200,
-              complete:function(){      
+              complete: function() {
                   self.loader.remove();
                   if (self.options.progress == 'circle-lg') {
                       var iconNew = toggle.querySelector<HTMLElement>('.active');
@@ -313,9 +310,9 @@ export class Card extends Control<ICardOptions> {
                     onShown: function() {
                         const elem: HTMLElement = self.loader.querySelector(':scope > div')
                         Velocity.animate(elem, "fadeOut", { 
-                        duration: 200,
-                        complete:function(){      
-                        } 
+                            duration: 200,
+                            complete:function(){      
+                            }, 
                         });
                     },
                     onClosed: function() {
@@ -325,3 +322,5 @@ export class Card extends Control<ICardOptions> {
         }
     };
 }
+
+pg[stringCard] = Card;

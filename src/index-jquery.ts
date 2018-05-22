@@ -15,3 +15,4 @@ import { SideBar } from './ui/SideBar';
 
 export { pg } from './ui/Pages';
 export { SideBar } from './ui/SideBar';
+export { Card } from './ui/Card';

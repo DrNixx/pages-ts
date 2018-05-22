@@ -1,5 +1,5 @@
 import { DeviceSizeType } from './StyleConfig';
-import { isNumber } from 'util';
+import isNumber = require('lodash/isNumber');
 
 declare var ActiveXObject: (type: string) => void;
 
@@ -360,15 +360,15 @@ export class Pages {
         }
     };
 
-    public on(element: Element, event: string, handler: EventListener) {
+    public on(element: EventTarget, event: string, handler: EventListener) {
         element.addEventListener(event, handler, false);
     }
 
-    public off(element: Element, event: string, handler: EventListener) {
+    public off(element: EventTarget, event: string, handler: EventListener) {
         element.removeEventListener(event, handler, false);
     }
 
-    public one(element: Element, event: string, handler: EventListener) {
+    public one(element: EventTarget, event: string, handler: EventListener) {
         const self = this;
         self.on(element, event, function handlerWrapper(e: Event) {
             handler(e);
@@ -391,14 +391,17 @@ export class Pages {
     };
 
     public extend<A>(a: A, b: A): A {
-        for (var key in b) {
-            if (b.hasOwnProperty(key)) {
-                a[key] = b[key];
+        if (b !== undefined) {
+            for (var key in b) {
+                if (b.hasOwnProperty(key)) {
+                    a[key] = b[key];
+                }
             }
         }
-
+        
         return a;
     }
 }
 
 export var pg = new Pages();
+window['pg'] = pg;

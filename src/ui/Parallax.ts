@@ -1,5 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
+import { Event } from "_debugger";
 
 const stringParallax = 'Parallax';
 
@@ -17,7 +18,7 @@ export class Parallax extends Control<IParallaxOptions> {
     content: any;
     coverPhoto: any;
 
-    protected defaults: IParallaxOptions = {
+    public static defaultProps: IParallaxOptions = {
         speed: {
             coverPhoto: 0.3,
             content: 0.17
@@ -48,14 +49,14 @@ export class Parallax extends Control<IParallaxOptions> {
         // init events 
         if ( !(stringParallax in this.element ) ) { // prevent adding event handlers twice
             if(!pg.isTouchDevice()) {
-                pg.on(window, scroll, this.animate())
+                pg.on(window, 'scroll', this.animate)
             }
 
             this.element[stringParallax] = this;
         }
     };
 
-    public animate() {
+    public animate(e) {
 
         var scrollPos;
         var pagecoverWidth = this.element['height'];

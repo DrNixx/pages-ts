@@ -21,7 +21,7 @@ export class Notification extends Control<INotificationOptions> {
     notification: HTMLDivElement;
     alert: HTMLDivElement;
 
-    protected defaults: INotificationOptions = {
+    public static defaultProps: INotificationOptions = {
         style: "simple",
         message: null,
         position: "top-right",
@@ -71,7 +71,7 @@ export class Notification extends Control<INotificationOptions> {
             const self = this;
             this.notification.appendChild(this.alert);
             
-            if(pg.hasClass('body', 'horizontal-menu')){
+            if(pg.hasClass(document.body, 'horizontal-menu')){
                 this.alignWrapperToContainer()
                 pg.on(window, 'resize', this.alignWrapperToContainer);
             }

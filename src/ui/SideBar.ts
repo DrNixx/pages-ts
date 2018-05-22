@@ -26,7 +26,7 @@ export class SideBar extends Control<ISideBarOptions> {
     private cssAnimation: boolean;
     private body: HTMLElement;
 
-    protected defaults: ISideBarOptions = {
+    public static defaultProps: ISideBarOptions = {
         pageContainer :".page-container",
         cssAnimation: true,
         css3d: true,
@@ -54,7 +54,7 @@ export class SideBar extends Control<ISideBarOptions> {
         // init events 
         if (!(stringSideBar in this.element)) { // prevent adding event handlers twice
             pg.on(this.element, "mouseenter", this.openSideBar);
-            pg.on(this.pageContainer[0], 'mouseover', this.closeSideBar);
+            pg.on(this.pageContainer, 'mouseover', this.closeSideBar);
 
             // add handler for menu toggler with attr "data-toggle" equal to data-pages
             var dp = this.element.getAttribute("data-pages");
@@ -155,7 +155,7 @@ export class SideBar extends Control<ISideBarOptions> {
          pg.addClass(this.body,'sidebar-visible');
     }
 
-    public closeSideBar(e) {
+    private closeSideBar = (e) => {
         const self = this;
         var menuClosedCSS = self.css3d == true ? 
             'translate3d(0, 0,0)' : 
@@ -234,3 +234,5 @@ export class SideBar extends Control<ISideBarOptions> {
         this.toggleSidebar();
     };
 }
+
+pg[stringSideBar] = SideBar;

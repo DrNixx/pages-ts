@@ -3,14 +3,14 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: ["./built/index.js"],
+        "jquery-wrapper": ["./built/index-jquery.js"],
     },
 
     output: {
         libraryTarget: "umd",
         library: "pages",
         path: path.join(__dirname, "public/pages/js"),
-		filename: "pages.js",
+		filename: "pages.[name].js",
     },
 
     // Enable sourcemaps for debugging webpack's output.
