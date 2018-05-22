@@ -1,0 +1,32 @@
+{
+  "name": "pages-ts",
+  "version": "1.0.0",
+  "description": "TypeSctipt library for revox.io pages",
+  "main": "built/index.js",
+  "types": "built/index.d.ts",
+  "scripts": {
+    "build": "tsc && webpack",
+    "webpack": "webpack",
+    "produce": "tsc && webpack --config webpack.production.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pages",
+    "library"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:DrNixx/pages-ts.git"
+  },
+  "author": "Nick Panteleeff",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.55",
+    "awesome-typescript-loader": "^3.5.0",
+    "source-map-loader": "^0.2.3",
+    "typescript": "^2.7.2",
+    "webpack": "^2.7.0"
+  }
+}
