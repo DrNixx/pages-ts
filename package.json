@@ -21,9 +21,13 @@
   "author": "Nick Panteleeff",
   "license": "MIT",
   "dependencies": {
+    "feather-icons": "^3.0.0",
+    "velocity-animate": "^1.5.1"
   },
   "devDependencies": {
+    "@types/jquery": "^3.3.2",
     "@types/node": "^7.0.55",
+    "@types/velocity-animate": "^1.2.32",
     "awesome-typescript-loader": "^3.5.0",
     "source-map-loader": "^0.2.3",
     "typescript": "^2.7.2",

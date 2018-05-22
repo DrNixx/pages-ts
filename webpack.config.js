@@ -1,3 +1,4 @@
+var path = require("path");
 var webpack = require('webpack');
 
 module.exports = {
@@ -8,7 +9,8 @@ module.exports = {
     output: {
         libraryTarget: "umd",
         library: "pages",
-        filename: "./index.js",
+        path: path.join(__dirname, "public/pages/js"),
+		filename: "pages.js",
     },
 
     // Enable sourcemaps for debugging webpack's output.
