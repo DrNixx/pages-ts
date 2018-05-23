@@ -297,7 +297,7 @@ export class Pages {
         wrapper.appendChild(el);
     }
 
-    public wrapAll(elms: HTMLElement[] | NodeListOf<HTMLElement>, wrapper: HTMLElement) {
+    public wrapAll(elms: Node[] | NodeListOf<Node>, wrapper: HTMLElement) {
         var parent = elms[0].parentNode;
         var previousSibling = elms[0].previousSibling;
 

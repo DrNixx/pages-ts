@@ -1,5 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
+import * as Velocity from "velocity-animate";
 
 const stringNotification = 'Notification';
 
@@ -233,5 +234,6 @@ export class Notification extends Control<INotificationOptions> {
         }
 
     }
-
 }
+
+pg[stringNotification] = Notification;

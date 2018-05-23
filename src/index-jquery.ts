@@ -14,5 +14,9 @@ import { SideBar } from './ui/SideBar';
 })(jQuery);
 
 export { pg } from './ui/Pages';
-export { SideBar } from './ui/SideBar';
 export { Card } from './ui/Card';
+export { ListView } from './ui/ListView';
+export { Notification } from './ui/Notification';
+export { Parallax } from './ui/Parallax';
+export { Search } from './ui/Search';
+export { SideBar } from './ui/SideBar';

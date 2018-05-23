@@ -1,6 +1,5 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import { Event } from "_debugger";
 
 const stringParallax = 'Parallax';
 
@@ -15,8 +14,8 @@ export interface IParallaxOptions extends IControlOptions {
 
 export class Parallax extends Control<IParallaxOptions> {
 
-    content: any;
-    coverPhoto: any;
+    content: HTMLElement;
+    coverPhoto: HTMLElement;
 
     public static defaultProps: IParallaxOptions = {
         speed: {
@@ -36,7 +35,7 @@ export class Parallax extends Control<IParallaxOptions> {
 
         // if cover photo img is found make it a background-image
         if (this.coverPhoto) {
-            var img = this.coverPhoto.querySelector(':scope > img');
+            const img = this.coverPhoto.querySelector(':scope > img');
             this.coverPhoto.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
             img.parentNode.removeChild(img);
         }
@@ -56,8 +55,7 @@ export class Parallax extends Control<IParallaxOptions> {
         }
     };
 
-    public animate(e) {
-
+    public animate(e: Event) {
         var scrollPos;
         var pagecoverWidth = this.element['height'];
         //opactiy to text starts at 50% scroll length
@@ -77,21 +75,22 @@ export class Parallax extends Control<IParallaxOptions> {
             this.coverPhoto.style.transform = styleString
             //Legacy Browsers
             this.coverPhoto.style.webkitTransform = styleString
-            this.coverPhoto.style.mozTransform = styleString
-            this.coverPhoto.style.msTransform = styleString
+            this.coverPhoto.style['mozTransform'] = styleString
+            this.coverPhoto.style['msTransform'] = styleString
         }
     
         this.content.style.transform = styleString
         //Legacy Browsers
         this.content.style.webkitTransform = styleString
-        this.content.style.mozTransform = styleString
-        this.content.style.msTransform = styleString
+        this.content.style['mozTransform'] = styleString
+        this.content.style['msTransform'] = styleString
     
         if (scrollPos > opacityKeyFrame) {
-            this.content.style.opacity =  1 - scrollPos / 1200;
+            this.content.style.opacity =  (1 - scrollPos / 1200).toString();
         } else {
-            this.content.style.opacity = 1;
+            this.content.style.opacity = "1";
         }
-    
     }
 }
+
+pg[stringParallax] = Parallax;

@@ -65,10 +65,10 @@ export class Card extends Control<ICardOptions> {
         if (!(stringCard in this.element)) {
             var self = this;
             
-            var btnCollapse = this.element.querySelector(this.options.collapseButton);
-            var btnClose = this.element.querySelector(this.options.closeButton);
-            var btnRefresh = this.element.querySelector(this.options.refreshButton);
-            var btnMaximize = this.element.querySelector(this.options.maximizeButton);
+            var btnCollapse = self.element.querySelector(self.options.collapseButton);
+            var btnClose = self.element.querySelector(self.options.closeButton);
+            var btnRefresh = self.element.querySelector(self.options.refreshButton);
+            var btnMaximize = self.element.querySelector(self.options.maximizeButton);
 
             if (btnCollapse){
                 pg.on(btnCollapse, 'click', function(e) {
@@ -110,13 +110,13 @@ export class Card extends Control<ICardOptions> {
                 });
             }
 
-            this.element[stringCard] = this;
+            self.element[stringCard] = self;
         }
     };
 
     private collapse = () => {
-        var icon = this.element.querySelector<HTMLElement>(this.options.collapseButton + ' > i');
-        var heading = this.element.querySelector('.card-header');
+        const icon = this.element.querySelector<HTMLElement>(this.options.collapseButton + ' > i');
+        const heading = this.element.querySelector('.card-header');
   
         if (pg.hasClass(this.element, 'card-collapsed')) {
             Velocity.animate(this.body, "slideDown", { 
@@ -125,9 +125,9 @@ export class Card extends Control<ICardOptions> {
             });
 
             pg.removeClass(this.element,'card-collapsed');
-            if (icon){
-              icon.className = "";
-              pg.addClass(icon,'pg-arrow_maximize')
+            if (icon) {
+                icon.className = "";
+                pg.addClass(icon,'pg-arrow_maximize')
             }
   
             if(this.options.onExpand) {
@@ -143,7 +143,7 @@ export class Card extends Control<ICardOptions> {
         }
 
         pg.addClass(this.element,'card-collapsed');
-        if (icon){
+        if (icon) {
             icon.className = "";
             pg.addClass(icon,'pg-arrow_minimize')
         }
@@ -153,15 +153,15 @@ export class Card extends Control<ICardOptions> {
         }
     };
   
-    private close =() => {
+    private close = () => {
         this.element.parentNode.removeChild(this.element)
-        if(this.options.onClose) {
+        if (this.options.onClose) {
             this.options.onClose(this);
         }
     };
   
     private maximize = () => {
-        var icon = <HTMLElement>this.element.querySelector(this.options.maximizeButton + ' > i');
+        const icon = <HTMLElement>this.element.querySelector(this.options.maximizeButton + ' > i');
   
         if (pg.hasClass(this.element,'card-maximized')) {
             pg.removeClass(this.element,'card-maximized');
@@ -181,13 +181,13 @@ export class Card extends Control<ICardOptions> {
             var headerHeight = 0;
 
             if (sidebar) {
-              var rect = window.getComputedStyle(sidebar, null);
-              sidebarWidth = parseInt(rect.left) + parseInt(rect.width);
+                var rect = window.getComputedStyle(sidebar, null);
+                sidebarWidth = parseInt(rect.left) + parseInt(rect.width);
             }
             
             if(header){
-              var rect = window.getComputedStyle(header, null);
-              headerHeight = parseInt(rect.height);
+                var rect = window.getComputedStyle(header, null);
+                headerHeight = parseInt(rect.height);
             }
   
             pg.addClass(this.element,'card-maximized');
@@ -195,8 +195,8 @@ export class Card extends Control<ICardOptions> {
             this.element.style.top = headerHeight + 'px';
   
             if(icon){
-              pg.removeClass(icon,"pg-fullscreen");
-              pg.addClass(icon,'pg-fullscreen_restore');
+                pg.removeClass(icon,"pg-fullscreen");
+                pg.addClass(icon,'pg-fullscreen_restore');
             }
 
             if(this.options.onMaximize) {
@@ -205,8 +205,8 @@ export class Card extends Control<ICardOptions> {
         }
     };
   
-    private refresh = (refresh) => {
-        var toggle = this.element.querySelector<HTMLElement>(this.options.refreshButton);
+    private refresh = (refresh: boolean) => {
+        const toggle = this.element.querySelector<HTMLElement>(this.options.refreshButton);
   
         if (refresh) {
             if (this.loader && pg.isVisible(this.loader)) {
@@ -221,13 +221,13 @@ export class Card extends Control<ICardOptions> {
             pg.addClass(this.loader, 'card-progress');
             this.loader.style.backgroundColor = 'rgba(' + this.options.overlayColor + ',' + this.options.overlayOpacity + ')'
   
-            var elem = document.createElement('div');
+            const elem = document.createElement('div');
   
             if (this.options.progress == 'circle') {
                 elem.className = "progress-circle-indeterminate progress-circle-"+ this.options.progressColor;
             } else if (this.options.progress == 'bar') {
                 elem.className = "progress progress-small";
-                var child = document.createElement("div");
+                const child = document.createElement("div");
                 child.className = "progress-bar-indeterminate progress-bar-"+ this.options.progressColor;
                 elem.appendChild(child);
             } else if (this.options.progress == 'circle-lg') {
@@ -261,7 +261,7 @@ export class Card extends Control<ICardOptions> {
             this.element.appendChild(this.loader);
   
             // Start Fix for FF: pre-loading animated to SVGs
-            var _loader = this.loader;
+            const _loader = this.loader;
             setTimeout(function() {
                 this.loader.parentNode.removeChild(this.loader)
                 this.element.appendChild(_loader);
@@ -285,8 +285,8 @@ export class Card extends Control<ICardOptions> {
               complete: function() {
                   self.loader.remove();
                   if (self.options.progress == 'circle-lg') {
-                      var iconNew = toggle.querySelector<HTMLElement>('.active');
-                      var iconOld = toggle.querySelector<HTMLElement>('.fade');
+                      const iconNew = toggle.querySelector<HTMLElement>('.active');
+                      const iconOld = toggle.querySelector<HTMLElement>('.fade');
                       pg.removeClass(iconNew, 'active');
                       pg.removeClass(iconOld, 'fade');
                       pg.removeClass(toggle, 'refreshing');
@@ -311,7 +311,7 @@ export class Card extends Control<ICardOptions> {
                         const elem: HTMLElement = self.loader.querySelector(':scope > div')
                         Velocity.animate(elem, "fadeOut", { 
                             duration: 200,
-                            complete:function(){      
+                            complete:function() {      
                             }, 
                         });
                     },

@@ -3,13 +3,14 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: ["./built/index.js"],
+        "jquery-wrapper": ["./built/index-jquery.js"],
     },
 
     output: {
         libraryTarget: "umd",
         library: "pages",
-        filename: "./index.js",
+        path: path.join(__dirname, "dist"),
+		filename: "pages.[name].js",
     },
 
     plugins:[
