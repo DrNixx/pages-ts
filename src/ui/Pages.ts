@@ -68,6 +68,10 @@ export class Pages {
     private pageScrollElement: string;
     private body: HTMLBodyElement;
 
+    public VERSION = "4.0.0";
+    public AUTHOR = "Revox";
+    public SUPPORT = "support@revox.io";
+
     constructor() {
         this.pageScrollElement = 'html, body';
         this.body = document.getElementsByTagName('body')[0];
