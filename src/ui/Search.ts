@@ -5,10 +5,10 @@ import * as Velocity from "velocity-animate";
 const stringSearch = 'Search';
 
 export interface ISearchOptions extends IControlOptions {
-    searchField: string,
-    closeButton: string,
-    suggestions: string,
-    brand: string,
+    searchField?: string,
+    closeButton?: string,
+    suggestions?: string,
+    brand?: string,
     onKeyEnter?: (value: string) => void,
     onSearchSubmit?: (value: string) => void
 }

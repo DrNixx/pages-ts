@@ -14,21 +14,21 @@ export interface IListElement {
 }
 
 export interface IListViewClasses {
-    animated: string,
-    container: string,
-    hidden: string,
-    stationaryHeader: string
+    animated?: string,
+    container?: string,
+    hidden?: string,
+    stationaryHeader?: string
 }
 
 export interface IListViewSelectors {
-    groupContainer: string,
-    groupHeader: string,
-    stationaryHeader: string
+    groupContainer?: string,
+    groupHeader?: string,
+    stationaryHeader?: string
 }
 
 export interface IListViewOptions extends IControlOptions {
-    classes: IListViewClasses,
-    selectors: IListViewSelectors
+    classes?: IListViewClasses,
+    selectors?: IListViewSelectors
 }
 
 export class ListView extends Control<IListViewOptions> {

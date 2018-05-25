@@ -4,12 +4,12 @@ import { Control, IControlOptions } from "./Control";
 const stringParallax = 'Parallax';
 
 export interface IParallaxOptions extends IControlOptions {
-    speed: {
-        coverPhoto: number,
-        content: number
+    speed?: {
+        coverPhoto?: number,
+        content?: number
     },
 
-    scrollElement: string;
+    scrollElement?: string;
 }
 
 export class Parallax extends Control<IParallaxOptions> {

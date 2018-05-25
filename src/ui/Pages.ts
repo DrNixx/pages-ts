@@ -327,25 +327,31 @@ export class Pages {
         var lookUp = parent ? parent : document;
         return typeof selector === 'object' ? selector : lookUp.querySelector(selector);
     }
-    
-    public getClosest(element: Node, selector) { //element is the element and selector is for the closest parent element to find
-        // source http://gomakethings.com/climbing-up-and-down-the-dom-tree-with-vanilla-javascript/
-        var firstChar = selector.charAt(0);
-        for ( ; element && element !== document; element = element[parentNode] ) { // Get closest match
-            if (firstChar === '.') {// If selector is a class
-                if (this.queryElement(selector, <Element>element[parentNode]) !== null && 
-                    this.hasClass(<HTMLElement>element, selector.replace('.',''))
-                ) { 
-                    return element; 
-                }
-            } else if (firstChar === '#') { // If selector is an ID
-                if ((<Element>element).id === selector.substr(1)) { 
-                    return element; 
-                }
+
+    public getClosest(elem: Node, selector) {
+        if (!Element.prototype.matches) {
+		    Element.prototype.matches =
+			    Element.prototype['matchesSelector'] ||
+			    Element.prototype['mozMatchesSelector'] ||
+			    Element.prototype.msMatchesSelector ||
+			    Element.prototype['oMatchesSelector'] ||
+			    Element.prototype.webkitMatchesSelector ||
+                function(s) {
+                    const matches = (this.document || this.ownerDocument).querySelectorAll(s);
+                    let i = matches.length;
+                    while (--i >= 0 && matches.item(i) !== this) {}
+                    return i > -1;
+                };
+	    }
+
+        // Get closest match
+        for ( ; elem && elem !== document; elem = elem.parentNode ) {
+            if ((<Element>elem).matches( selector)) {
+                return <Element>elem;
             }
         }
 
-        return false;
+        return null;
     }
 
     public addEvent(el, type: string, handler: EventListener) {
