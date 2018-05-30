@@ -3,6 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
+        "core": ["./built/index.js"],
         "jquery-wrapper": ["./built/index-jquery.js"],
     },
 

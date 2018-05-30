@@ -25,7 +25,7 @@ export class Parallax extends Control<IParallaxOptions> {
         scrollElement: 'window'
     }
 
-    constructor(element: string, options: IParallaxOptions) {
+    constructor(element: string | HTMLElement, options: IParallaxOptions) {
         super(element, options);
         
         this.coverPhoto = this.element.querySelector('.cover-photo');

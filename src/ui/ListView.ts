@@ -51,7 +51,7 @@ export class ListView extends Control<IListViewOptions> {
         }
     }
 
-    public constructor(element: string, options: IListViewOptions) {
+    public constructor(element: string | HTMLElement, options: IListViewOptions) {
         super(element, options);
 
         this.bind();
