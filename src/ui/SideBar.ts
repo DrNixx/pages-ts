@@ -66,15 +66,17 @@ export class SideBar extends Control<ISideBarOptions> {
                 });
             }
 
-            pg.live('.sidebar-menu a','click',function(e) {
-                var element = this
-                if(element.parentNode.querySelectorAll(".sub-menu") === false){
-                    return
+            pg.live('.sidebar-menu a', 'click', function(e) {
+                const element = <HTMLAnchorElement>this;
+                const li = <HTMLLIElement>element.parentNode;
+
+                if (!li.querySelectorAll(".sub-menu")) {
+                    return;
                 }
-                var parent = element.parentNode.parentNode
-                var li = element.parentNode
-                var sub = element.parentNode.querySelector(".sub-menu");
-                if(pg.hasClass(li, sOpen)) {
+
+                const parent = <HTMLElement>li.parentNode;
+                const sub = <HTMLElement>li.querySelector(".sub-menu");
+                if (pg.hasClass(li, sOpen)) {
                     pg.removeClass(element.querySelector(".arrow"), sOpen)
                     pg.removeClass(element.querySelector(".arrow"), sActive);
                     //Velocity(sub, "stop", true);
@@ -86,13 +88,14 @@ export class SideBar extends Control<ISideBarOptions> {
                         } 
                     });
                 } else {
-                    var openMenu = parent.querySelector("li." + sOpen);
-                    if(openMenu){
-                        Velocity.animate(openMenu, "slideUp", { 
+                    const openMenu = <HTMLLIElement>parent.querySelector("li." + sOpen);
+                    if (openMenu) {
+                        const openMenuSub = <HTMLElement>openMenu.querySelector(".sub-menu");
+                        Velocity.animate(openMenuSub, "slideUp", { 
                             duration: 200,
-                            complete:function(){
-                                pg.removeClass(li, sOpen)
-                                pg.removeClass(li, sActive)
+                            complete:function() {
+                                pg.removeClass(openMenuSub, sOpen)
+                                pg.removeClass(openMenuSub, sActive)
                                 pg.removeClass(openMenu, sOpen);
                                 pg.removeClass(openMenu, sActive);
                             } 
@@ -100,6 +103,7 @@ export class SideBar extends Control<ISideBarOptions> {
                         pg.removeClass(openMenu.querySelector("li > a .arrow"), sOpen);
                         pg.removeClass(openMenu.querySelector("li > a .arrow"), sActive);
                     }
+                    
                     pg.addClass(element.querySelector(".arrow"), sOpen);
                     pg.addClass(element.querySelector(".arrow"), sActive);
                     //Velocity(sub, "stop", true);
