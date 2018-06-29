@@ -54,15 +54,16 @@ export class SideBar extends Control<ISideBarOptions> {
     private bind = () => {
         // init events 
         if (!(stringSideBar in this.element)) { // prevent adding event handlers twice
-            pg.on(this.element, "mouseenter", this.openSideBar);
-            pg.on(this.pageContainer, 'mouseover', this.closeSideBar);
+            const self = this;
+            pg.on(self.element, "mouseenter", self.openSideBar);
+            pg.on(self.pageContainer, 'mouseover', self.closeSideBar);
 
             // add handler for menu toggler with attr "data-toggle" equal to data-pages
-            var dp = this.element.getAttribute("data-pages");
+            var dp = self.element.getAttribute("data-pages");
             if (dp) {
                 pg.live('[data-toggle="' + dp + '"]', 'click', function(e) {
                     e.preventDefault();
-                    this.toggleSidebar();
+                    self.toggleSidebar();
                 });
             }
 
@@ -132,15 +133,15 @@ export class SideBar extends Control<ISideBarOptions> {
             //      e.preventDefault();
             // });
 
-            this.element[stringSideBar] = this;
+            self.element[stringSideBar] = self;
         }
     }
 
     private openSideBar = (e) => {
         const self = this;
-        var _sideBarWidthCondensed = pg.hasClass(this.body, "rtl") ? - self.sideBarWidthCondensed : self.sideBarWidthCondensed;
+        var _sideBarWidthCondensed = pg.hasClass(self.body, "rtl") ? - self.sideBarWidthCondensed : self.sideBarWidthCondensed;
 
-         var menuOpenCSS = this.css3d == true ? 
+         var menuOpenCSS = self.css3d == true ? 
             'translate3d(' + _sideBarWidthCondensed + 'px, 0,0)' : 
             'translate(' + _sideBarWidthCondensed + 'px, 0)';
 
@@ -156,8 +157,8 @@ export class SideBar extends Control<ISideBarOptions> {
             return;
          }
 
-         this.element.style.transform = menuOpenCSS
-         pg.addClass(this.body,'sidebar-visible');
+         self.element.style.transform = menuOpenCSS
+         pg.addClass(self.body,'sidebar-visible');
     }
 
     private closeSideBar = (e) => {
@@ -178,47 +179,50 @@ export class SideBar extends Control<ISideBarOptions> {
          if (pg.hasClass(self.body,"menu-pin"))
              return;
 
-         if (pg.hasClass(this.element.querySelector('.sidebar-overlay-slide'), sShow)) {
+         if (pg.hasClass(self.element.querySelector('.sidebar-overlay-slide'), sShow)) {
             // @TODO : 
-            pg.removeClass(this.element.querySelector('.sidebar-overlay-slide'), sShow)
+            pg.removeClass(self.element.querySelector('.sidebar-overlay-slide'), sShow)
             // $("[data-pages-toggle']").removeClass(sActive)
          }
 
-         this.element.style.transform = menuClosedCSS;
+         self.element.style.transform = menuClosedCSS;
          pg.removeClass(self.body,'sidebar-visible');
     }
 
     private toggleSidebar = () => {
+        const self = this;
          let timer;
-         const bodyStyles = window.getComputedStyle ? getComputedStyle(this.body, null) : this.body.style;
-         this.pageContainer[0].style.backgroundColor = bodyStyles.backgroundColor;
+         const bodyStyles = window.getComputedStyle ? getComputedStyle(self.body, null) : self.body.style;
+         self.pageContainer[0].style.backgroundColor = bodyStyles.backgroundColor;
 
-         if (pg.hasClass(this.body,'sidebar-' + sOpen)) {
-             pg.removeClass(this.body,'sidebar-' + sOpen);
+         if (pg.hasClass(self.body,'sidebar-' + sOpen)) {
+             pg.removeClass(self.body,'sidebar-' + sOpen);
              timer = setTimeout(function() {
-                 pg.removeClass(this.element,'visible');
-             }.bind(this), 400);
+                 pg.removeClass(self.element,'visible');
+             }.bind(self), 400);
          } else {
              clearTimeout(timer);
-             pg.addClass(this.element,'visible');
+             pg.addClass(self.element,'visible');
              setTimeout(function() {
-                 pg.addClass(this.body,'sidebar-' + sOpen);
-             }.bind(this), 10);
+                 pg.addClass(self.body,'sidebar-' + sOpen);
+             }.bind(self), 10);
 
              setTimeout(function() {
                 // remove background color
-                this.pageContainer[0].style.backgroundColor = ''
+                self.pageContainer[0].style.backgroundColor = ''
              }, 1000);
          }
     }
     
     private togglePinSidebar = (toggle?: string) => {
+            const body = this.body;
+
          if (toggle == 'hide') {
-             pg.removeClass(this.body, 'menu-pin');
+             pg.removeClass(body, 'menu-pin');
          } else if (toggle == sShow) {
-             pg.addClass(this.body, 'menu-pin');
+             pg.addClass(body, 'menu-pin');
          } else {
-             pg.toggleClass(this.body, 'menu-pin');
+             pg.toggleClass(body, 'menu-pin');
          }
     };
 
