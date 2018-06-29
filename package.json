@@ -26,13 +26,13 @@
     "velocity-animate": "^1.5.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.3.2",
-    "@types/lodash": "^4.14.104",
-    "@types/node": "^7.0.55",
+    "@types/jquery": "^3.3.4",
+    "@types/lodash": "^4.14.110",
+    "@types/node": "^7.0.66",
     "@types/velocity-animate": "^1.2.32",
     "awesome-typescript-loader": "^3.5.0",
     "source-map-loader": "^0.2.3",
-    "typescript": "^2.7.2",
+    "typescript": "^2.9.2",
     "webpack": "^2.7.0"
   }
 }
