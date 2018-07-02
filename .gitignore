@@ -1,7 +1,8 @@
 node_modules
+dist
 built
 .vscode
-/onix-core.js
-/onix-core.js.map
 
+public/*.js
+public/*.js.map
 npm-debug.log

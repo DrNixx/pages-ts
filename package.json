@@ -1,13 +1,14 @@
 {
   "name": "pages-ts",
-  "version": "4.1.2",
+  "version": "4.2.3",
   "description": "TypeSctipt library for revox.io pages",
   "main": "built/index.js",
   "types": "built/index.d.ts",
   "scripts": {
-    "build": "tsc && webpack",
-    "webpack": "webpack",
-    "produce": "tsc && webpack --config webpack.production.config.js",
+    "build": "tsc",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "dev": "webpack --config webpack.dev.js",
+    "prod": "webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -21,8 +22,8 @@
   "author": "Nick Panteleeff",
   "license": "MIT",
   "dependencies": {
-    "feather-icons": "^3.0.0",
-    "lodash": "^4.17.5",
+    "feather-icons": "^3.3.0",
+    "lodash": "^4.17.10",
     "velocity-animate": "^1.5.1"
   },
   "devDependencies": {
@@ -30,9 +31,12 @@
     "@types/lodash": "^4.14.110",
     "@types/node": "^7.0.66",
     "@types/velocity-animate": "^1.2.32",
-    "awesome-typescript-loader": "^3.5.0",
-    "source-map-loader": "^0.2.3",
+    "clean-webpack-plugin": "^0.1.19",
+    "ts-loader": "^4.4.2",
     "typescript": "^2.9.2",
-    "webpack": "^2.7.0"
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.3"
   }
 }
