@@ -1,8 +1,12 @@
 /node_modules
-/samples
+/public
 /src/scss
 /test
 /tsconfig.json
+/tsconfig.webpack.json
+/webpack.common.js
+/webpack.dev.js
+/webpack.prod.js
 /*.config.js
 /*.js.map
 /.gitattributes

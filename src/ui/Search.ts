@@ -55,10 +55,11 @@ export class Search extends Control<ISearchOptions> {
                 }
             });
 
-            pg.on(self.searchField, 'keyup', function(e: KeyboardEvent) {
+            pg.on(self.searchField, 'keyup', function(e: Event) {
+                const ke = <KeyboardEvent>e;
                 self.options.onKeyEnter && self.options.onKeyEnter(self.searchField.value);
-                if (e.keyCode == 13) { //Enter pressed
-                    e.preventDefault();
+                if (ke.keyCode == 13) { //Enter pressed
+                    ke.preventDefault();
                     self.options.onSearchSubmit && self.options.onSearchSubmit(self.searchField.value);
                 }
             
@@ -77,20 +78,23 @@ export class Search extends Control<ISearchOptions> {
                 }
             });
 
-            pg.on(document, 'keypress', function(e: KeyboardEvent) {
-                self.keypress(e);
+            pg.on(document, 'keypress', function(e: Event) {
+                self.keypress(<KeyboardEvent>e);
             });
 
-            pg.on(document, 'keyup', function(e: KeyboardEvent) {
+            pg.on(document, 'keyup', function(e: Event) {
+                const ke = <KeyboardEvent>e;
+
                 // Dismiss overlay on ESC is pressed
                 // .is(':visible') in vanilla JS
-                if (pg.isVisible(self.element) && e.keyCode == 27) {
+                if (pg.isVisible(self.element) && ke.keyCode == 27) {
                     self.toggleOverlay('hide');
                 }
             });
 
             pg.live('[data-toggle="search"]', 'click', function(e) {
-                if (e.target.nodeName === 'A') {
+                const el = <HTMLElement>(e.target);
+                if (el.nodeName === 'A') {
                     e.preventDefault();
                 }
 
@@ -150,8 +154,8 @@ export class Search extends Control<ISearchOptions> {
                 if (pg.isVisible(self.element)) {
                     pg.toggleClass(self.brand, 'invisible')
                 }
-                pg.on(document, 'keypress', function(e: KeyboardEvent) {
-                    self.keypress(e);
+                pg.on(document, 'keypress', function(e: Event) {
+                    self.keypress(<KeyboardEvent>e);
                 });
             }, 10);
         }

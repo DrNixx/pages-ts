@@ -121,10 +121,10 @@ export class SideBar extends Control<ISideBarOptions> {
             pg.live('.sidebar-slide-toggle', 'click', function(e) {
                 e.preventDefault();
                 pg.toggleClass(this, sActive);
-                var el = this.getAttribute('data-pages-toggle');
-                if (el != null) {
+                const elId = this.getAttribute('data-pages-toggle');
+                if (elId != null) {
                     //Only by ID
-                    el = document.getElementById(el.substr(1));
+                    const el = document.getElementById(elId.substr(1));
                     pg.toggleClass(el, sShow);
                 }
             });

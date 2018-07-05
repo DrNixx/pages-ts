@@ -10,18 +10,17 @@ import { Select } from './ui/Select';
 (function($) {
     function initPages() {
         var parallax = null;
-        var $this = this;
-
-		$('[data-pages="list-view"]').each(function() {
-			 new ListView(this, {});
+		
+		$('[data-pages="list-view"]').each(function(ix, element) {
+			 new ListView(element, {});
 		});
 
-		$('[data-navigate="view"]').each(function() {
-			new MobileView(this, {});
+		$('[data-navigate="view"]').each(function(ix, element) {
+			new MobileView(element, {});
 		});
 
-		$('[data-pages="parallax"]').each(function() {
-			parallax = new Parallax(this, {});
+		$('[data-pages="parallax"]').each(function(ix, element) {
+			parallax = new Parallax(element, {});
 		});
         
         //Events
@@ -36,20 +35,20 @@ import { Select } from './ui/Select';
             }
 	    });
 
-		$('[data-pages-progress="circle"]').each(function() {
-			new Progress(<HTMLInputElement>this, {});
+		$('[data-pages-progress="circle"]').each(function(ix, element) {
+			new Progress(<HTMLInputElement>element, {});
 		});
 
-		$('[data-pages="quickview"]').each(function() {
-			new Quickview(this, {});
+		$('[data-pages="quickview"]').each(function(ix, element) {
+			new Quickview(element, {});
 		});
 
-		$('[data-pages="sidebar"]').each(function() {
-			new SideBar(this, {});
+		$('[data-pages="sidebar"]').each(function(ix, element) {
+			new SideBar(element, {});
 		});
 
-		$('select[data-init-plugin="cs-select"]').each(function() {
-			new Select(this, {});
+		$('select[data-init-plugin="cs-select"]').each(function(ix, element) {
+			new Select(element, {});
 		});        
     }
 

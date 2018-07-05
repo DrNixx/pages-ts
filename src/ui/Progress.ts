@@ -87,7 +87,7 @@ export class Progress extends Control<IProgressOptions> {
 
         if ( !(stringProgress in self.element ) ) { // prevent adding event handlers twice
             pg.on(self.element, 'input', function(e) {
-                self.setValue(parseInt(this.value));
+                self.setValue(parseInt((<HTMLInputElement>this).value));
             });
 
             self.element[stringProgress] = self;

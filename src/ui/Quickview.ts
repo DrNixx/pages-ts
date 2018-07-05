@@ -1,6 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import forEach = require('lodash/forEach');
+import forEach from 'lodash-es/forEach';
 
 const stringQuickview = 'Quickview';
 
@@ -109,7 +109,7 @@ export class Quickview extends Control<IQuickviewOptions> {
                 pg.toggleClass(this, 'active');
             }, pg.queryElement(this.options.notes));
         
-            var toggleEvent = function(e) {
+            var toggleEvent = function(this: HTMLElement, e: Event) {
                 var elem = this.getAttribute('data-toggle-element');
                 pg.toggleClass(pg.queryElement(elem),'open');
                 e.preventDefault();

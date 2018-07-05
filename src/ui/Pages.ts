@@ -1,9 +1,9 @@
 import { DeviceSizeType } from './StyleConfig';
-import isNumber = require('lodash/isNumber');
+import isNumber from 'lodash-es/isNumber'; 
 
 declare var ActiveXObject: (type: string) => void;
 
-const globalObject = typeof global !== 'undefined' ? global : this||window;
+//const globalObject = typeof global !== 'undefined' ? global : this || window;
 const doc = document.documentElement;
 const body = document.body;
 
@@ -329,6 +329,7 @@ export class Pages {
     }
 
     public getClosest(elem: Node, selector) {
+        const self = this;
         if (!Element.prototype.matches) {
 		    Element.prototype.matches =
 			    Element.prototype['matchesSelector'] ||
@@ -336,8 +337,8 @@ export class Pages {
 			    Element.prototype.msMatchesSelector ||
 			    Element.prototype['oMatchesSelector'] ||
 			    Element.prototype.webkitMatchesSelector ||
-                function(s) {
-                    const matches = (this.document || this.ownerDocument).querySelectorAll(s);
+                function(this: Element, s: string) {
+                    const matches = (this.ownerDocument).querySelectorAll(s);
                     let i = matches.length;
                     while (--i >= 0 && matches.item(i) !== this) {}
                     return i > -1;
@@ -370,7 +371,7 @@ export class Pages {
         }
     };
 
-    public on(element: EventTarget, event: string, handler: EventListener) {
+    public on(element: EventTarget, event: string, handler: (this: HTMLElement, e: Event) => void) {
         element.addEventListener(event, handler, false);
     }
 
@@ -386,7 +387,7 @@ export class Pages {
         });
     }
 
-    public live(selector, event, callback, context?) {
+    public live(selector: string, event: string, callback: (this: HTMLElement, e: Event) => void, context?) {
         this.addEvent(context || document, event, function(e) {
             let found = false;
             let el: Element = <Element>e.target || e.srcElement;
