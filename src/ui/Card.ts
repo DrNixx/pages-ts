@@ -206,31 +206,32 @@ export class Card extends Control<ICardOptions> {
     };
   
     private refresh = (refresh: boolean) => {
-        const toggle = this.element.querySelector<HTMLElement>(this.options.refreshButton);
+        const self = this;
+        const toggle = self.element.querySelector<HTMLElement>(self.options.refreshButton);
   
         if (refresh) {
-            if (this.loader && pg.isVisible(this.loader)) {
+            if (self.loader && pg.isVisible(self.loader)) {
                 return;
             }
 
-            if (!this.options.onRefresh) {
+            if (!self.options.onRefresh) {
                 return; // onRefresh() not set
             }
 
-            this.loader = document.createElement('div');
-            pg.addClass(this.loader, 'card-progress');
-            this.loader.style.backgroundColor = 'rgba(' + this.options.overlayColor + ',' + this.options.overlayOpacity + ')'
+            self.loader = document.createElement('div');
+            pg.addClass(self.loader, 'card-progress');
+            self.loader.style.backgroundColor = 'rgba(' + self.options.overlayColor + ',' + self.options.overlayOpacity + ')'
   
             const elem = document.createElement('div');
   
-            if (this.options.progress == 'circle') {
-                elem.className = "progress-circle-indeterminate progress-circle-"+ this.options.progressColor;
-            } else if (this.options.progress == 'bar') {
+            if (self.options.progress == 'circle') {
+                elem.className = "progress-circle-indeterminate progress-circle-"+ self.options.progressColor;
+            } else if (self.options.progress == 'bar') {
                 elem.className = "progress progress-small";
                 const child = document.createElement("div");
-                child.className = "progress-bar-indeterminate progress-bar-"+ this.options.progressColor;
+                child.className = "progress-bar-indeterminate progress-bar-"+ self.options.progressColor;
                 elem.appendChild(child);
-            } else if (this.options.progress == 'circle-lg') {
+            } else if (self.options.progress == 'circle-lg') {
                 pg.addClass(toggle,'refreshing');
                 const iconOld = toggle.querySelector<HTMLElement>('i');
 
@@ -242,7 +243,7 @@ export class Card extends Control<ICardOptions> {
                     iconNew.style.top = iconOld.offsetTop + "px";
                     iconNew.style.left = iconOld.offsetLeft + "px";
                     
-                    pg.addClass(iconNew,'card-icon-refresh-lg-' + this.options.progressColor + '-animated');
+                    pg.addClass(iconNew,'card-icon-refresh-lg-' + self.options.progressColor + '-animated');
                     toggle.appendChild(iconNew);
                 } else {
                     iconNew = toggle.querySelector('[class$="-animated"]');
@@ -253,29 +254,29 @@ export class Card extends Control<ICardOptions> {
             } else {
                 elem.className = "progress progress-small";
                 var child = document.createElement("div");
-                child.className = "progress-bar-indeterminate progress-bar-" + this.options.progressColor;
+                child.className = "progress-bar-indeterminate progress-bar-" + self.options.progressColor;
                 elem.appendChild(child);
             }
   
-            this.loader.appendChild(elem);
-            this.element.appendChild(this.loader);
+            self.loader.appendChild(elem);
+            self.element.appendChild(self.loader);
   
             // Start Fix for FF: pre-loading animated to SVGs
-            const _loader = this.loader;
+            const _loader = self.loader;
             setTimeout(function() {
-                this.loader.parentNode.removeChild(this.loader)
-                this.element.appendChild(_loader);
+                self.loader.parentNode.removeChild(self.loader)
+                self.element.appendChild(_loader);
             }.bind(this), 300);
             // End fix
   
-            Velocity.animate(this.loader, "fadeIn", { 
+            Velocity.animate(self.loader, "fadeIn", { 
                 duration: 200,
                 complete: function() {
                 }
             });
   
-            if (this.options.onRefresh) {
-                this.options.onRefresh(this);
+            if (self.options.onRefresh) {
+                self.options.onRefresh(self);
             }
   
         } else {

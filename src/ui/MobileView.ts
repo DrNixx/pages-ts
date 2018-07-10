@@ -20,24 +20,24 @@ export class MobileView extends Control<IMobileViewOptions> {
     private bind = () => {
         const self = this;
         if ( !(stringMobileView in self.element ) ) { // prevent adding event handlers twice
-            pg.on(this.element,'click',function(e){
-                var el = document.querySelector(this.getAttribute('data-view-port'));
-                var toView = this.getAttribute('data-toggle-view');
-                if (toView != null) {
+            pg.on(self.element,'click',function(e){
+                var el = <HTMLElement>document.querySelector(this.getAttribute('data-view-port'));
+                var toViewId = this.getAttribute('data-toggle-view');
+                if (toViewId != null) {
                     // TODO verify this
-                    var subviews = el.childNodes.pop().querySelectorAll('.view')
-                    subviews.forEach(function(el) {
-                        el.style.display = "none";
-                    });
+                    // var subviews = el.childNodes.pop().querySelectorAll('.view')
+                    // subviews.forEach(function(el) {
+                    //    el.style.display = "none";
+                    //});
     
-                    pg.queryElement(toView).style.display = "block"
+                    pg.queryElement(toViewId).style.display = "block"
                 }
                 else{
-                     toView = el 
+                     toViewId = el.id 
                 }
                 var viewAnimation = this.getAttribute('data-view-animation')
-                pg.toggleClass(el,viewAnimation);
-                self.options.onNavigate(toView, viewAnimation);
+                pg.toggleClass(el, viewAnimation);
+                self.options.onNavigate(toViewId, viewAnimation);
                 return false;                
             });
 

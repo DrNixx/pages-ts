@@ -223,10 +223,10 @@ export class Notification extends Control<INotificationOptions> {
             const self = this;
             // settimeout removes scope. use .bind(this)
             setTimeout(function() {
-                Velocity.animate(this.notification, "fadeOut", { 
+                Velocity.animate(self.notification, "fadeOut", { 
                     duration: 300,
                     complete:function(){
-                        this.notification.remove();
+                        self.notification.remove();
                         self.options.onClosed();                
                     } 
               });

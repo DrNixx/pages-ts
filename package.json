@@ -2,8 +2,8 @@
   "name": "pages-ts",
   "version": "4.3.6",
   "description": "TypeSctipt library for revox.io pages",
-  "main": "built/index.js",
-  "types": "built/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
     "start": "webpack-dev-server --open --config webpack.dev.js",
@@ -22,14 +22,14 @@
   "author": "Nick Panteleeff",
   "license": "MIT",
   "dependencies": {
-    "feather-icons": "^3.3.0",
-    "lodash": "^4.17.10",
+    "feather-icons": "^4.7.3",
+    "lodash-es": "^4.17.10",
     "velocity-animate": "^1.5.1"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.4",
-    "@types/lodash": "^4.14.111",
-    "@types/node": "^7.0.67",
+    "@types/lodash-es": "^4.17.0",
+    "@types/node": "^10.5.1",
     "@types/velocity-animate": "^1.2.32",
     "clean-webpack-plugin": "^0.1.19",
     "ts-loader": "^4.4.2",
