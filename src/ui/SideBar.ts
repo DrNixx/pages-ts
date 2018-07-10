@@ -81,13 +81,15 @@ export class SideBar extends Control<ISideBarOptions> {
                     pg.removeClass(element.querySelector(".arrow"), sOpen)
                     pg.removeClass(element.querySelector(".arrow"), sActive);
                     //Velocity(sub, "stop", true);
-                    Velocity.animate(sub, "slideUp", { 
-                        duration: 200,
-                        complete:function() {
-                            pg.removeClass(li, sOpen);
-                            pg.removeClass(li, sActive);
-                        } 
-                    });
+                    if (sub) {
+                        Velocity.animate(sub, "slideUp", { 
+                            duration: 200,
+                            complete:function() {
+                                pg.removeClass(li, sOpen);
+                                pg.removeClass(li, sActive);
+                            } 
+                        });    
+                    }
                 } else {
                     const openMenu = <HTMLLIElement>parent.querySelector("li." + sOpen);
                     if (openMenu) {
@@ -108,13 +110,15 @@ export class SideBar extends Control<ISideBarOptions> {
                     pg.addClass(element.querySelector(".arrow"), sOpen);
                     pg.addClass(element.querySelector(".arrow"), sActive);
                     //Velocity(sub, "stop", true);
-                    Velocity.animate(sub, "slideDown", { 
-                        duration: 200,
-                        complete:function(){
-                            pg.addClass(li, sOpen)
-                            pg.addClass(li, sActive)
-                        } 
-                    });                
+                    if (sub) {
+                        Velocity.animate(sub, "slideDown", { 
+                            duration: 200,
+                            complete:function(){
+                                pg.addClass(li, sOpen)
+                                pg.addClass(li, sActive)
+                            } 
+                        });
+                    }
                 }
             });
 
