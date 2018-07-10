@@ -277,18 +277,22 @@ export class Pages {
     }
 
     public addClass(el: HTMLElement, className: string) {
-        if (el && el.classList) {
-            el.classList.add(className);
-        } else if (!this.hasClass(el, className)) {
-            el.className += ' ' + className;
+        if (el) {
+            if (el.classList) {
+                el.classList.add(className);
+            } else if (!this.hasClass(el, className)) {
+                el.className += ' ' + className;
+            }
         }
     }
 
     public removeClass(el: HTMLElement, className: string) {
-        if (el && el.classList) {
-            el.classList.remove(className);
-        } else {
-            el.className = el.className.replace(new RegExp('\\b'+ className+'\\b', 'g'), '');
+        if (el) {
+            if (el.classList) {
+                el.classList.remove(className);
+            } else {
+                el.className = el.className.replace(new RegExp('\\b'+ className+'\\b', 'g'), '');
+            }
         }
     }
 
