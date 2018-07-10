@@ -269,11 +269,15 @@ export class Pages {
 
     // class manipulation, since 2.0.0 requires polyfill.js
     public hasClass (el: HTMLElement, className: string) {
-        return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
+        if (el) {
+            return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
+        } else {
+            return false;
+        }
     }
 
     public addClass(el: HTMLElement, className: string) {
-        if (el.classList) {
+        if (el && el.classList) {
             el.classList.add(className);
         } else if (!this.hasClass(el, className)) {
             el.className += ' ' + className;
@@ -281,7 +285,7 @@ export class Pages {
     }
 
     public removeClass(el: HTMLElement, className: string) {
-        if (el.classList) {
+        if (el && el.classList) {
             el.classList.remove(className);
         } else {
             el.className = el.className.replace(new RegExp('\\b'+ className+'\\b', 'g'), '');
@@ -297,8 +301,10 @@ export class Pages {
     }
 
     public wrap(el: HTMLElement, wrapper: HTMLElement) {
-        el.parentNode.insertBefore(wrapper, el);
-        wrapper.appendChild(el);
+        if (el) {
+            el.parentNode.insertBefore(wrapper, el);
+            wrapper.appendChild(el);
+        }
     }
 
     public wrapAll(elms: Node[] | NodeListOf<Node>, wrapper: HTMLElement) {

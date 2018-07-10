@@ -20,7 +20,7 @@ export interface ISideBarOptions extends IControlOptions {
 }
 
 export class SideBar extends Control<ISideBarOptions> {
-    private pageContainer: Element;
+    private pageContainer: HTMLElement;
     private sideBarWidthCondensed: number;
     private sideBarWidth: number;
     private css3d: boolean;
@@ -46,7 +46,7 @@ export class SideBar extends Control<ISideBarOptions> {
         this.sideBarWidthCondensed = this.options.sideBarWidthCondensed;
         
         var sidebarMenu = this.element.querySelectorAll('.sidebar-menu > ul');
-        this.pageContainer = document.querySelectorAll(this.options.pageContainer)[0];
+        this.pageContainer = <HTMLElement>document.querySelectorAll(this.options.pageContainer)[0];
 
         this.bind();
     }
@@ -193,7 +193,7 @@ export class SideBar extends Control<ISideBarOptions> {
         const self = this;
          let timer;
          const bodyStyles = window.getComputedStyle ? getComputedStyle(self.body, null) : self.body.style;
-         self.pageContainer[0].style.backgroundColor = bodyStyles.backgroundColor;
+         self.pageContainer.style.backgroundColor = bodyStyles.backgroundColor;
 
          if (pg.hasClass(self.body,'sidebar-' + sOpen)) {
              pg.removeClass(self.body,'sidebar-' + sOpen);
@@ -209,7 +209,7 @@ export class SideBar extends Control<ISideBarOptions> {
 
              setTimeout(function() {
                 // remove background color
-                self.pageContainer[0].style.backgroundColor = ''
+                self.pageContainer.style.backgroundColor = ''
              }, 1000);
          }
     }
