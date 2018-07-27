@@ -4,8 +4,10 @@ import { MobileView } from './ui/MobileView';
 import { Parallax } from './ui/Parallax';
 import { Progress } from './ui/Progress';
 import { Quickview } from './ui/Quickview';
-import { SideBar } from './ui/SideBar';
 import { Select } from './ui/Select';
+import { SideBar } from './ui/SideBar';
+import { Social } from './ui/Social';
+
 
 (function($) {
     function initPages() {
@@ -49,9 +51,17 @@ import { Select } from './ui/Select';
 
 		$('select[data-init-plugin="cs-select"]').each(function(ix, element) {
 			new Select(element, {});
-		});        
-    }
+		});
 
+		$(function() {
+			Social.onInitialize();
+
+			$(window).on('resize', function() {
+				Social.onResize();
+			});
+			
+		});
+    }
 
     initPages();
 

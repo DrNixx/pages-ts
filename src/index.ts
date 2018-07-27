@@ -9,3 +9,4 @@ export { Quickview } from './ui/Quickview';
 export { Search } from './ui/Search';
 export { Select } from './ui/Select';
 export { SideBar } from './ui/SideBar';
+export { Social } from './ui/Social';

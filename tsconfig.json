@@ -17,6 +17,9 @@
         "emitDecoratorMetadata": true,
         "outDir": "./lib"
     },
+    "include": [
+        "src/**/*"
+    ],
     "files": [
         "src/index.ts",
         "src/index-jquery.ts"

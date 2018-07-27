@@ -23,20 +23,22 @@
   "license": "MIT",
   "dependencies": {
     "feather-icons": "^4.7.3",
+    "isotope-layout": "^3.0.6",
     "lodash-es": "^4.17.10",
     "velocity-animate": "^1.5.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.3.4",
-    "@types/lodash-es": "^4.17.0",
-    "@types/node": "^10.5.1",
+    "@types/isotope-layout": "^3.0.4",
+    "@types/jquery": "^3.3.5",
+    "@types/lodash-es": "^4.17.1",
+    "@types/node": "^10.5.3",
     "@types/velocity-animate": "^1.2.32",
     "clean-webpack-plugin": "^0.1.19",
     "ts-loader": "^4.4.2",
     "typescript": "^2.9.2",
-    "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4",
+    "webpack": "^4.16.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.3"
   }
 }
