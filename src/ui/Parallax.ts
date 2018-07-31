@@ -28,10 +28,8 @@ export class Parallax extends Control<IParallaxOptions> {
     constructor(element: string | HTMLElement, options: IParallaxOptions) {
         super(element, options);
         
-        this.coverPhoto = this.element.querySelector('.cover-photo');
-        
-        // TODO: rename .inner to .page-cover-content
-        this.content = this.element.querySelector('.inner');
+        this.coverPhoto = this.element.querySelector('.cover-photo');        
+        this.content = this.element.querySelector('.page-cover-content');
 
         // if cover photo img is found make it a background-image
         if (this.coverPhoto) {
@@ -55,40 +53,41 @@ export class Parallax extends Control<IParallaxOptions> {
         }
     };
 
-    public animate(e: Event) {
-        var scrollPos;
-        var pagecoverWidth = this.element['height'];
+    public animate = (e: Event) => {
+        const self = this;
+        let scrollPos;
+        const pagecoverWidth = self.element['height'];
         //opactiy to text starts at 50% scroll length
         var opacityKeyFrame = pagecoverWidth * 50 / 100;
         var direction = 'translateX';
     
-        if (this.options.scrollElement === 'window'){
+        if (self.options.scrollElement === 'window'){
             scrollPos = window.pageYOffset || document.documentElement.scrollTop;
         }
         else{
-            scrollPos =  document.querySelector(this.options.scrollElement).scrollTop;
+            scrollPos =  document.querySelector(self.options.scrollElement).scrollTop;
         }
         
         direction = 'translateY';
-        var styleString = direction + '(' + scrollPos * this.options.speed.coverPhoto + 'px)';
-        if (this.coverPhoto) {
-            this.coverPhoto.style.transform = styleString
+        const styleString = direction + '(' + scrollPos * self.options.speed.coverPhoto + 'px)';
+        if (self.coverPhoto) {
+            self.coverPhoto.style.transform = styleString
             //Legacy Browsers
-            this.coverPhoto.style.webkitTransform = styleString
-            this.coverPhoto.style['mozTransform'] = styleString
-            this.coverPhoto.style['msTransform'] = styleString
+            self.coverPhoto.style.webkitTransform = styleString
+            self.coverPhoto.style['mozTransform'] = styleString
+            self.coverPhoto.style['msTransform'] = styleString
         }
     
-        this.content.style.transform = styleString
+        self.content.style.transform = styleString
         //Legacy Browsers
-        this.content.style.webkitTransform = styleString
-        this.content.style['mozTransform'] = styleString
-        this.content.style['msTransform'] = styleString
+        self.content.style.webkitTransform = styleString
+        self.content.style['mozTransform'] = styleString
+        self.content.style['msTransform'] = styleString
     
         if (scrollPos > opacityKeyFrame) {
-            this.content.style.opacity =  (1 - scrollPos / 1200).toString();
+            self.content.style.opacity =  (1 - scrollPos / 1200).toString();
         } else {
-            this.content.style.opacity = "1";
+            self.content.style.opacity = "1";
         }
     }
 }
