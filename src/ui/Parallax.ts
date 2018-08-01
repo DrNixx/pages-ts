@@ -69,10 +69,7 @@ export class Parallax extends Control<IParallaxOptions> {
 
     public animate = (e: Event) => {
         const self = this;
-        let scrollPos;
-        const pagecoverWidth = self.element['height'];
-        // opactiy to text starts at 50% scroll length
-        var opacityKeyFrame = pagecoverWidth * 50 / 100;
+        let scrollPos: number;
         var direction = 'translateX';
     
         if (self.options.scrollElement === 'window'){
@@ -99,6 +96,10 @@ export class Parallax extends Control<IParallaxOptions> {
         self.content.style['mozTransform'] = styleString
         self.content.style['msTransform'] = styleString
     
+        const pagecoverWidth = self.element.clientHeight;
+        // opactiy to text starts at 50% scroll length
+        const opacityKeyFrame = pagecoverWidth * 50 / 100;
+
         if (scrollPos > opacityKeyFrame) {
             self.content.style.opacity =  (1 - scrollPos / 1200).toString();
         } else {
