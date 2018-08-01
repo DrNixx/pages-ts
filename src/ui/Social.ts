@@ -136,3 +136,5 @@ export class Social extends Control<ISocialOptions> {
         });
     }
 }
+
+pg[stringSocial] = Social;
