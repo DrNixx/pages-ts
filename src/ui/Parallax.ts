@@ -70,17 +70,16 @@ export class Parallax extends Control<IParallaxOptions> {
     public animate = (e: Event) => {
         const self = this;
         let scrollPos: number;
-        var direction = 'translateX';
-    
         if (self.options.scrollElement === 'window'){
             scrollPos = window.pageYOffset || document.documentElement.scrollTop;
         } else {
             scrollPos =  document.querySelector(self.options.scrollElement).scrollTop;
         }
         
-        direction = 'translateY';
-        const styleString = direction + '(' + scrollPos * self.options.speed.coverPhoto + 'px)';
+        let direction = 'translateY';
+        let styleString;
         if (self.coverPhoto) {
+            styleString = direction + '(' + scrollPos * self.options.speed.coverPhoto + 'px)';
             self.coverPhoto.style.transform = styleString
             
             // +Legacy Browsers
@@ -89,12 +88,16 @@ export class Parallax extends Control<IParallaxOptions> {
             self.coverPhoto.style['msTransform'] = styleString
         }
     
-        self.content.style.transform = styleString
+        if (self.content) {
+            styleString = direction + '(' + scrollPos * self.options.speed.content + 'px)';
+            self.content.style.transform = styleString
         
-        // +Legacy Browsers
-        self.content.style.webkitTransform = styleString
-        self.content.style['mozTransform'] = styleString
-        self.content.style['msTransform'] = styleString
+            // +Legacy Browsers
+            self.content.style.webkitTransform = styleString
+            self.content.style['mozTransform'] = styleString
+            self.content.style['msTransform'] = styleString
+        }
+        
     
         const pagecoverWidth = self.element.clientHeight;
         // opactiy to text starts at 50% scroll length
