@@ -30,6 +30,7 @@ export class Social extends Control<ISocialOptions> {
     private resizeTimeout: any = null;
     private columns: number = 0;
     private colWidth: number = 0;
+    private iso: Isotope = null;
 
     constructor(element: string | HTMLElement, options: ISocialOptions) {
         super(element, options);
@@ -65,6 +66,7 @@ export class Social extends Control<ISocialOptions> {
 
 
             }
+
             // Prevent 'vh' bug on iOS7
             if(pg.getUserAgent() == 'mobile'){
                 //var wh = $(window).height();
@@ -78,7 +80,7 @@ export class Social extends Control<ISocialOptions> {
                     return;
                 }
 
-                var iso = new Isotope(self.day, {
+                self.iso = new Isotope(self.day, {
                     itemSelector: self.options.item,
                     masonry: {
                         columnWidth: self.colWidth,
@@ -109,7 +111,10 @@ export class Social extends Control<ISocialOptions> {
         clearTimeout(self.resizeTimeout);
 
         self.resizeTimeout = setTimeout(function() {
-            self.day.isotope('layout');
+            if (self.iso) {
+                self.iso.layout();
+            }
+            
         }, 300);
     }
 
