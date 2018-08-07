@@ -369,7 +369,7 @@ export class Pages {
         if (el.attachEvent) {
             el.attachEvent('on' + type, handler); 
         } else {
-            el.addEventListener(type, handler);
+            el.addEventListener(type, handler, false);
         }
     }
 
@@ -377,16 +377,16 @@ export class Pages {
         if (el.detachEvent) {
             el.detachEvent('on' + type, handler); 
         } else {
-            el.removeEventListener(type, handler);
+            el.removeEventListener(type, handler, false);
         }
     };
 
     public on(element: EventTarget, event: string, handler: (this: HTMLElement, e: Event) => void) {
-        element.addEventListener(event, handler, false);
+        this.addEvent(element, event, handler);
     }
 
     public off(element: EventTarget, event: string, handler: EventListener) {
-        element.removeEventListener(event, handler, false);
+        this.removeEvent(element, event, handler);
     }
 
     public one(element: EventTarget, event: string, handler: EventListener) {
