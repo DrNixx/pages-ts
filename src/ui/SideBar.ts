@@ -55,9 +55,9 @@ export class SideBar extends Control<ISideBarOptions> {
         // init events 
         if (!(stringSideBar in this.element)) { // prevent adding event handlers twice
             const self = this;
-            pg.on(self.element, "mouseenter", self.openSideBar);
+            pg.on(self.element, "mouseenter mouseleave", self.openSideBar);
             if (pg.isTouchDevice()) {
-                pg.on(self.element, "ontouchend", self.openSideBar);
+                pg.on(self.element, "touchstart", self.openSideBar);
             }
 
             pg.on(self.pageContainer, 'mouseover', self.closeSideBar);
