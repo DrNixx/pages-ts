@@ -55,7 +55,7 @@ export class SideBar extends Control<ISideBarOptions> {
         // init events 
         if (!(stringSideBar in this.element)) { // prevent adding event handlers twice
             const self = this;
-            pg.on(self.element, "mouseenter mouseleave", self.openSideBar);
+            pg.on(self.element, "mouseenter", self.openSideBar);
             if (pg.isTouchDevice()) {
                 pg.on(self.element, "touchstart", self.openSideBar);
             }
@@ -126,7 +126,7 @@ export class SideBar extends Control<ISideBarOptions> {
                 }
             });
 
-            pg.live('.sidebar-slide-toggle', 'click touchend', function(e) {
+            pg.live('.sidebar-slide-toggle', 'click', function(e) {
                 e.preventDefault();
                 pg.toggleClass(this, sActive);
                 const elId = this.getAttribute('data-pages-toggle');
