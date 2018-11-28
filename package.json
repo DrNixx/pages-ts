@@ -1,6 +1,6 @@
 {
   "name": "pages-ts",
-  "version": "4.4.21",
+  "version": "4.5.22",
   "description": "TypeSctipt library for revox.io pages",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,6 +28,7 @@
     "velocity-animate": "^1.5.2"
   },
   "devDependencies": {
+    "@types/bootstrap": "^4.1.2",
     "@types/isotope-layout": "^3.0.4",
     "@types/jquery": "^3.3.22",
     "@types/lodash-es": "^4.17.1",

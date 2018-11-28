@@ -6,6 +6,7 @@ const stringSelect = 'SelectFx';
 export interface ISelectOptions extends IControlOptions {
     newTab?: boolean,
     stickyPlaceholder?: boolean,
+    wrapped?: boolean;
     container?: string,
     onChange?: (el) => void
 }
@@ -14,6 +15,7 @@ export class Select extends Control<ISelectOptions> {
     public static defaultProps: ISelectOptions = {
         newTab: true,
         stickyPlaceholder: true,
+        wrapped: false,
         container: 'body',
         onChange: (el: HTMLElement) => {
             const event = document.createEvent('HTMLEvents');
@@ -144,7 +146,7 @@ export class Select extends Control<ISelectOptions> {
                 return;
             }
 
-            var tag = el.tagName.toLowerCase();
+            const tag = el.tagName.toLowerCase();
 
             if (tag === 'option') {
                 options += createOptionHTML(<HTMLOptionElement>el);
@@ -158,12 +160,14 @@ export class Select extends Control<ISelectOptions> {
         });
 
     
-        var wrapper = document.createElement('div');
-        wrapper.className = 'cs-wrapper';
-        this.element.insertAdjacentElement('afterend', wrapper);
-        wrapper.appendChild(this.element);
-        
-        var opts_el = '<div class="cs-options"><ul>' + options + '</ul></div>';
+        if (this.options.wrapped) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'cs-wrapper';
+            this.element.insertAdjacentElement('afterend', wrapper);
+            wrapper.appendChild(this.element);
+        }
+    
+        const opts_el = '<div class="cs-options"><ul>' + options + '</ul></div>';
         this.selEl = document.createElement('div');
         this.selEl.className = this.element.className;
         this.selEl.tabIndex = this.element.tabIndex;
@@ -172,7 +176,7 @@ export class Select extends Control<ISelectOptions> {
         this.selEl.appendChild(this.element);
 
         // backdrop to support dynamic heights of the dropdown
-        var backdrop = document.createElement('div');
+        const backdrop = document.createElement('div');
         backdrop.className = 'cs-backdrop';
         this.selEl.appendChild(backdrop);
     }
@@ -208,7 +212,7 @@ export class Select extends Control<ISelectOptions> {
 
         // keyboard navigation events
         this.selEl.addEventListener('keydown', function(ev) {
-            var keyCode = ev.keyCode || ev.which;
+            const keyCode = ev.keyCode || ev.which;
 
             switch (keyCode) {
                 // up key
@@ -262,7 +266,7 @@ export class Select extends Control<ISelectOptions> {
             this.toggleSelect();
         }
     
-        var tmpcurrent = typeof this.preSelCurrent != 'undefined' && this.preSelCurrent !== -1 ? 
+        const tmpcurrent = typeof this.preSelCurrent != 'undefined' && this.preSelCurrent !== -1 ? 
             this.preSelCurrent : 
             this.current;
     
@@ -288,9 +292,9 @@ export class Select extends Control<ISelectOptions> {
         const csOptions: HTMLDivElement = this.selEl.querySelector('.cs-options');
         const csPlaceholder: HTMLSpanElement = this.selEl.querySelector('.cs-placeholder');
 
-        var csPlaceholderWidth = csPlaceholder.offsetWidth;
-        var csPlaceholderHeight = csPlaceholder.offsetHeight;
-        var csOptionsWidth = csOptions.scrollWidth;
+        const csPlaceholderWidth = csPlaceholder.offsetWidth;
+        const csPlaceholderHeight = csPlaceholder.offsetHeight;
+        const csOptionsWidth = csOptions.scrollWidth;
 
         if (this.isOpen()) {
             if (this.current !== -1) {
@@ -298,9 +302,9 @@ export class Select extends Control<ISelectOptions> {
                 this.selPlaceholder.textContent = this.selOpts[this.current].textContent;
             }
 
-            var dummy = this.selEl['data'];
+            const dummy = this.selEl['data'];
 
-            var parent = dummy.parentNode;
+            const parent = dummy.parentNode;
             //parent.appendChild(this.selEl);
             pg.insertAfter(this.selEl, dummy);
             this.selEl.removeAttribute('style');
@@ -309,7 +313,7 @@ export class Select extends Control<ISelectOptions> {
 
             // Hack for FF
             // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
-            var x = this.selEl.clientHeight;
+            const x = this.selEl.clientHeight;
 
             // reset backdrop
             backdrop.style.transform = 
@@ -357,7 +361,7 @@ export class Select extends Control<ISelectOptions> {
 
 
             this.selEl.style.position = 'absolute';
-            var offsetselEl = pg.offset(this.selEl);
+            const offsetselEl = pg.offset(this.selEl);
 
             this.selEl.style.left = offsetselEl.left + 'px';
             this.selEl.style.top = offsetselEl.top + 'px';
@@ -365,14 +369,14 @@ export class Select extends Control<ISelectOptions> {
             container.appendChild(this.selEl);
 
             // decide backdrop's scale factor depending on the content height
-            var contentHeight = csOptions.offsetHeight;
-            var originalHeight = csPlaceholder.offsetHeight;
+            const contentHeight = csOptions.offsetHeight;
+            const originalHeight = csPlaceholder.offsetHeight;
 
-            var contentWidth = csOptions.offsetWidth;
-            var originalWidth = csPlaceholder.offsetWidth;
+            const contentWidth = csOptions.offsetWidth;
+            const originalWidth = csPlaceholder.offsetWidth;
 
-            var scaleV = contentHeight / originalHeight;
-            var scaleH = (contentWidth > originalWidth) ? contentWidth / originalWidth : 1.05;
+            const scaleV = contentHeight / originalHeight;
+            const scaleH = (contentWidth > originalWidth) ? contentWidth / originalWidth : 1.05;
             //backdrop.style.transform = backdrop.style.webkitTransform = backdrop.style.MozTransform = backdrop.style.msTransform = backdrop.style.OTransform = 'scale3d(' + scaleH + ', ' + scaleV + ', 1)';
             backdrop.style.transform = 
                 backdrop.style.webkitTransform = 
@@ -390,7 +394,7 @@ export class Select extends Control<ISelectOptions> {
 
             pg.addClass(this.selEl, 'cs-active');
 
-            var resizedWidth = (csPlaceholderWidth < csOptionsWidth) ? csOptionsWidth : csPlaceholderWidth;
+            const resizedWidth = (csPlaceholderWidth < csOptionsWidth) ? csOptionsWidth : csPlaceholderWidth;
 
             this.selEl.style.width = resizedWidth + 'px';
             this.selEl.style.height = originalHeight + 'px';
@@ -414,7 +418,7 @@ export class Select extends Control<ISelectOptions> {
         }
 
         // current option
-        var opt = this.selOpts[this.current];
+        const opt = this.selOpts[this.current];
 
         // update current selected value
         this.selPlaceholder.textContent = opt.textContent;

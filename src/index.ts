@@ -10,3 +10,4 @@ export { Search } from './ui/Search';
 export { Select } from './ui/Select';
 export { SideBar } from './ui/SideBar';
 export { Social } from './ui/Social';
+export { Bootstrap } from './ui/Bootstrap';
