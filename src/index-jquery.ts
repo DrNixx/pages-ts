@@ -85,7 +85,7 @@ import { Social } from './ui/Social';
 		});
 
 		$('select[data-init-plugin="cs-select"]').each(function(ix, element) {
-			new Select(element, {});
+			new Select(<HTMLSelectElement>element, {});
 		});
 
 		$(function() {

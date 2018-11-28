@@ -260,12 +260,16 @@ export class Pages {
         return this.checkVisiblity('xl');
     }
 
+    public isTouchDevice() {
+        return 'ontouchstart' in document.documentElement;
+    }
+
     // Init DATA API
     public initializeDataAPI = (component, constructor, collection) => {
         for (var i=0; i < collection[length]; i++) {
             new constructor(collection[i]);
         }
-    };
+    }
 
     // class manipulation, since 2.0.0 requires polyfill.js
     public hasClass (el: HTMLElement, className: string) {
@@ -304,6 +308,18 @@ export class Pages {
         }
     }
 
+    public offset(el: HTMLElement) {
+        return {
+            left: el.getBoundingClientRect().left + 
+                window.pageXOffset - 
+                el.ownerDocument.documentElement.clientLeft,
+
+            top: el.getBoundingClientRect().top + 
+                window.pageYOffset - 
+                el.ownerDocument.documentElement.clientTop
+        }
+    }
+
     public wrap(el: HTMLElement, wrapper: HTMLElement) {
         if (el) {
             el.parentNode.insertBefore(wrapper, el);
@@ -322,10 +338,10 @@ export class Pages {
         parent.insertBefore(wrapper, nextSibling);
 
         return wrapper;
-    };
+    }
 
-    public isTouchDevice() {
-        return 'ontouchstart' in document.documentElement;
+    public insertAfter(newNode: Element, referenceNode: Element) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
     }
 
     // selection methods
@@ -344,7 +360,7 @@ export class Pages {
 		    Element.prototype.matches =
 			    Element.prototype['matchesSelector'] ||
 			    Element.prototype['mozMatchesSelector'] ||
-			    Element.prototype.msMatchesSelector ||
+			    Element.prototype['msMatchesSelector'] ||
 			    Element.prototype['oMatchesSelector'] ||
 			    Element.prototype.webkitMatchesSelector ||
                 function(this: Element, s: string) {
@@ -363,6 +379,15 @@ export class Pages {
         }
 
         return null;
+    }
+
+    public hasParent(e, p) {
+        if (!e) return false;
+        var el = e.target || e.srcElement || e || false;
+        while (el && el != p) {
+            el = el.parentNode || false;
+        }
+        return (el !== false);
     }
 
     public addEvent(el, type: string, handler: EventListener) {
