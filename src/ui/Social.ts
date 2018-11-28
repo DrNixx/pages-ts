@@ -1,7 +1,7 @@
 import toSafeInteger from 'lodash-es/toSafeInteger'; 
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import * as Isotope from 'isotope-layout'
+import * as Masonry from 'masonry-layout'
 
 const stringSocial = 'Social';
 
@@ -26,7 +26,7 @@ export class Social extends Control<ISocialOptions> {
     private cover: HTMLElement = null;
     private days: NodeListOf<HTMLElement>;
     private item: HTMLElement = null;
-    private layouts: Isotope[] = [];
+    private layouts: Masonry[] = [];
     private status: HTMLElement = null;
     private resizeTimeout: any = null;
     private columns: number = 0;
@@ -80,13 +80,11 @@ export class Social extends Control<ISocialOptions> {
                 }
 
                 self.days.forEach((day, index) => {
-                    self.layouts[index] = new Isotope(day, {
+                    self.layouts[index] = new Masonry(day, {
                         itemSelector: self.options.item,
-                        masonry: {
-                            columnWidth: self.colWidth,
-                            gutter: 20,
-                            fitWidth: true
-                        }
+                        columnWidth: '.col1',
+                        gutter: 20,
+                        fitWidth: true
                     });
                 });
             }, 500);
