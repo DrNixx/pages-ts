@@ -24,19 +24,20 @@ export class Social extends Control<ISocialOptions> {
     }
 
     private cover: HTMLElement = null;
-    private day: HTMLElement = null;
+    private days: NodeListOf<HTMLElement>;
     private item: HTMLElement = null;
+    private layouts: Isotope[] = [];
     private status: HTMLElement = null;
     private resizeTimeout: any = null;
     private columns: number = 0;
     private colWidth: number = 0;
-    private iso: Isotope = null;
+    
 
     constructor(element: string | HTMLElement, options: ISocialOptions) {
         super(element, options);
         
         this.cover = this.element.querySelector(this.options.cover);
-        this.day = this.element.querySelector(this.options.day);
+        this.days = this.element.querySelectorAll(this.options.day);
         this.item = this.element.querySelector(this.options.item);
         this.status = this.element.querySelector(this.options.status);
         this.colWidth = toSafeInteger(this.options.colWidth);
@@ -46,7 +47,7 @@ export class Social extends Control<ISocialOptions> {
 
     private bind = () => {
         if (!(stringSocial in this.element)) {
-            var self = this;
+            const self = this;
 
             // Dependency: stepsForm 
             if (typeof window.stepsForm != 'undefined') {
@@ -63,8 +64,6 @@ export class Social extends Control<ISocialOptions> {
                         pg.addClass(finalMessage, 'show')
                     }
                 });
-
-
             }
 
             // Prevent 'vh' bug on iOS7
@@ -76,17 +75,19 @@ export class Social extends Control<ISocialOptions> {
             }
            
             setTimeout(function() {
-                if(!self.day) {
+                if (!self.days || (self.days.length === 0)) {
                     return;
                 }
 
-                self.iso = new Isotope(self.day, {
-                    itemSelector: self.options.item,
-                    masonry: {
-                        columnWidth: self.colWidth,
-                        gutter: 20,
-                        fitWidth: true
-                    }
+                self.days.forEach((day, index) => {
+                    self.layouts[index] = new Isotope(day, {
+                        itemSelector: self.options.item,
+                        masonry: {
+                            columnWidth: self.colWidth,
+                            gutter: 20,
+                            fitWidth: true
+                        }
+                    });
                 });
             }, 500);
 
@@ -95,13 +96,17 @@ export class Social extends Control<ISocialOptions> {
     }
 
     public setContainerWidth = () => {
-        var currentColumns = Math.floor((document.body.clientWidth - 100) / this.colWidth);
+        const self = this;
+        const currentColumns = Math.floor((document.body.clientWidth - 100) / self.colWidth);
         if (currentColumns !== this.columns) {
             // set new column count
-            this.columns = currentColumns;
+            self.columns = currentColumns;
+
             // apply width to container manually, then trigger relayout
-            if(this.day) {
-                this.day.style.width = (this.columns * (this.colWidth + 20)).toString();
+            if (self.days && (self.days.length > 0)) {
+                self.days.forEach((day, index) => {
+                    day.style.width = (self.columns * self.colWidth + ((self.columns - 1) * 20)).toString();    
+                });    
             }
         }
     }
@@ -111,10 +116,9 @@ export class Social extends Control<ISocialOptions> {
         clearTimeout(self.resizeTimeout);
 
         self.resizeTimeout = setTimeout(function() {
-            if (self.iso) {
-                self.iso.layout();
+            for (let i = 0; i < self.layouts.length; i++) {
+                self.layouts[i].layout();
             }
-            
         }, 300);
     }
 
