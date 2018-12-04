@@ -79,7 +79,7 @@ export class Social extends Control<ISocialOptions> {
                     return;
                 }
 
-                self.days.forEach((day, index) => {
+                [].forEach.call(self.days, (day: HTMLElement, index: number) => {
                     self.layouts[index] = new Masonry(day, {
                         itemSelector: self.options.item,
                         columnWidth: '.col1',
@@ -102,9 +102,9 @@ export class Social extends Control<ISocialOptions> {
 
             // apply width to container manually, then trigger relayout
             if (self.days && (self.days.length > 0)) {
-                self.days.forEach((day, index) => {
+                [].forEach.call(self.days, (day: HTMLElement, index: number) => {
                     day.style.width = (self.columns * self.colWidth + ((self.columns - 1) * 20)).toString();    
-                });    
+                });
             }
         }
     }
