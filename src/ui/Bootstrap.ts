@@ -4,14 +4,14 @@ import { Select } from './Select';
 export class Bootstrap {
     public static reponsiveTabs() {
         const fxTabs = document.querySelectorAll('[data-init-reponsive-tabs="dropdownfx"]');
-        fxTabs.forEach((el) => {
+        [].forEach.call(fxTabs, (el) => {
             const drop = <HTMLElement>el;
             pg.addClass(drop, 'hidden-sm');
             pg.addClass(drop, 'hidden-xs');
             
             let content = '<select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">'
             const lis = drop.querySelectorAll('li');
-            drop.querySelectorAll('li').forEach((li) => {
+            [].forEach.call(drop.querySelectorAll('li'), (li) => {
                 var selected = "";
 				
                 if (pg.hasClass(li, "active")) {
