@@ -38,7 +38,7 @@ export class Parallax extends Control<IParallaxOptions> {
 
         // if cover photo img is found make it a background-image
         if (this.coverPhoto) {
-            const img = this.coverPhoto.querySelector(':scope > img');
+            const img = this.element.querySelector(this.options.photo + ' > img');
             this.coverPhoto.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
             img.parentNode.removeChild(img);
         }
