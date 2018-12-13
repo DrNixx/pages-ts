@@ -22,6 +22,10 @@ export class Bootstrap {
                 let text = '---'
                 const link = li.querySelector('a');
                 if (link) {
+                    if (pg.hasClass(link, "active")) {
+                        selected = "selected";
+                    }
+
                     val = link.dataset['target'] ? link.dataset['target'] : link.href; 
                     text = link.innerHTML;
                 }
@@ -36,10 +40,14 @@ export class Bootstrap {
             pg.addEvent(select, 'change', (e) => {
                 var optionSelected = select.querySelector("option:checked");
                 var valueSelected = (<HTMLOptionElement>optionSelected).value;
-                
-                const link = drop.querySelector(`a[href="${valueSelected}"], a[data-target="${valueSelected}"]`);
-                if (link) {
-                    jQuery(link).tab('show');
+
+                if (valueSelected.charAt(0) == "#") {
+                    const link = drop.querySelector(`a[href="${valueSelected}"], a[data-target="${valueSelected}"]`);
+                    if (link) {
+                        jQuery(link).tab('show');
+                    }
+                } else {
+                    window.location.href = valueSelected;
                 }
             });
             

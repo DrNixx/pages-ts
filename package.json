@@ -1,6 +1,6 @@
 {
   "name": "pages-ts",
-  "version": "4.5.28",
+  "version": "4.5.29",
   "description": "TypeSctipt library for revox.io pages",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
