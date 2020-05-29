@@ -105,7 +105,7 @@ export class Social extends Control<ISocialOptions> {
     public setContainerWidth = (day: HTMLElement) => {
         if (!this.percentPosition) {
             const currentColumns = Math.floor((day.parentElement.clientWidth - (this.gutterWidth * 5)) / this.colWidth);
-            day.style.width = (currentColumns * this.colWidth + ((currentColumns - 1) * 20)).toString();    
+            day.style.width = (currentColumns * this.colWidth + ((currentColumns - 1) * 20)).toString() + "px";    
         }
     }
 
