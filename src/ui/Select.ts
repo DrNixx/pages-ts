@@ -126,7 +126,7 @@ export class Select extends Control<ISelectOptions> {
 
             let extraAttributes = '';
 
-			[].forEach.call(el.attributes, function(attr) {
+			[].forEach.call(el.attributes, function(attr: Attr) {
 				const name: string = attr['name'];
 
 				if (name.indexOf('data-') + ['data-option', 'data-value'].indexOf(name) == -1) {

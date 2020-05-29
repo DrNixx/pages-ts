@@ -327,7 +327,7 @@ export class Pages {
         }
     }
 
-    public wrapAll(elms: Node[] | NodeListOf<Node>, wrapper: HTMLElement) {
+    public wrapAll(elms: Node[] | NodeListOf<Node> | NodeListOf<ChildNode>, wrapper: HTMLElement) {
         var parent = elms[0].parentNode;
         var previousSibling = elms[0].previousSibling;
 
@@ -425,7 +425,7 @@ export class Pages {
     public live(selector: string, event: string, callback: (this: HTMLElement, e: Event) => void, context?) {
         this.addEvent(context || document, event, function(e) {
             let found = false;
-            let el: Element = <Element>e.target || e.srcElement;
+            let el: any = (e.target as HTMLElement) || e.srcElement;
             while (el && el.matches && el !== context && !(found = el.matches(selector))) {
                 el = el.parentElement;
             }

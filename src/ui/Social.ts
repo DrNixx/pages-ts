@@ -10,7 +10,9 @@ export interface ISocialOptions extends IControlOptions {
     day?: string,
     status?: string,
     item?: string,
-    colWidth?: number|string
+    colWidth?: number|string,
+    gutterWidth?: number|string,
+    percentPosition?: boolean|string,
 }
 
 export class Social extends Control<ISocialOptions> {
@@ -20,7 +22,9 @@ export class Social extends Control<ISocialOptions> {
         day: '[data-social="day"]',
         status: '[data-social="status"]',
         item: '[data-social="item"]',
-        colWidth: 300
+        colWidth: 300,
+        gutterWidth: 20,
+        percentPosition: false,
     }
 
     private cover: HTMLElement = null;
@@ -29,8 +33,9 @@ export class Social extends Control<ISocialOptions> {
     private layouts: Masonry[] = [];
     private status: HTMLElement = null;
     private resizeTimeout: any = null;
-    private columns: number = 0;
     private colWidth: number = 0;
+    private gutterWidth: number = 0;
+    private percentPosition: boolean = false;
     
 
     constructor(element: string | HTMLElement, options: ISocialOptions) {
@@ -41,6 +46,8 @@ export class Social extends Control<ISocialOptions> {
         this.item = this.element.querySelector(this.options.item);
         this.status = this.element.querySelector(this.options.status);
         this.colWidth = toSafeInteger(this.options.colWidth);
+        this.gutterWidth = toSafeInteger(this.options.gutterWidth);
+        this.percentPosition = !!this.options.percentPosition;
 
         this.bind();
     }
@@ -80,11 +87,13 @@ export class Social extends Control<ISocialOptions> {
                 }
 
                 [].forEach.call(self.days, (day: HTMLElement, index: number) => {
+                    self.setContainerWidth(day);
                     self.layouts[index] = new Masonry(day, {
                         itemSelector: self.options.item,
                         columnWidth: '.col1',
-                        gutter: 20,
-                        fitWidth: true
+                        gutter: self.gutterWidth,
+                        fitWidth: true,
+                        percentPosition: self.percentPosition
                     });
                 });
             }, 500);
@@ -93,19 +102,10 @@ export class Social extends Control<ISocialOptions> {
         }
     }
 
-    public setContainerWidth = () => {
-        const self = this;
-        const currentColumns = Math.floor((document.body.clientWidth - 100) / self.colWidth);
-        if (currentColumns !== this.columns) {
-            // set new column count
-            self.columns = currentColumns;
-
-            // apply width to container manually, then trigger relayout
-            if (self.days && (self.days.length > 0)) {
-                [].forEach.call(self.days, (day: HTMLElement, index: number) => {
-                    day.style.width = (self.columns * self.colWidth + ((self.columns - 1) * 20)).toString();    
-                });
-            }
+    public setContainerWidth = (day: HTMLElement) => {
+        if (!this.percentPosition) {
+            const currentColumns = Math.floor((day.parentElement.clientWidth - (this.gutterWidth * 5)) / this.colWidth);
+            day.style.width = (currentColumns * this.colWidth + ((currentColumns - 1) * 20)).toString();    
         }
     }
 

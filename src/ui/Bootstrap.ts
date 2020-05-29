@@ -11,7 +11,7 @@ export class Bootstrap {
             
             let content = '<select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">'
             const lis = drop.querySelectorAll('li');
-            [].forEach.call(drop.querySelectorAll('li'), (li) => {
+            [].forEach.call(drop.querySelectorAll('li'), (li: HTMLLIElement) => {
                 var selected = "";
 				
                 if (pg.hasClass(li, "active")) {
