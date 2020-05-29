@@ -1,6 +1,6 @@
 {
   "name": "pages-ts",
-  "version": "4.5.31",
+  "version": "4.6.32",
   "description": "TypeSctipt library for revox.io pages",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,12 +22,14 @@
   "author": "Nick Panteleeff",
   "license": "MIT",
   "dependencies": {
+    "isotope-layout": "^3.0.6",
     "lodash-es": "^4.17.15",
     "masonry-layout": "^4.2.2",
     "velocity-animate": "^1.5.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^4.5.0",
+    "@types/isotope-layout": "^3.0.8",
     "@types/jquery": "^3.3.38",
     "@types/lodash-es": "^4.17.3",
     "@types/masonry-layout": "^4.2.1",

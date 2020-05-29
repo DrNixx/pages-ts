@@ -1,7 +1,7 @@
 import toSafeInteger from 'lodash-es/toSafeInteger'; 
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import * as Masonry from 'masonry-layout'
+import * as Isotope from 'isotope-layout';
 
 const stringSocial = 'Social';
 
@@ -30,7 +30,7 @@ export class Social extends Control<ISocialOptions> {
     private cover: HTMLElement = null;
     private days: NodeListOf<HTMLElement>;
     private item: HTMLElement = null;
-    private layouts: Masonry[] = [];
+    private layouts: Isotope[] = [];
     private status: HTMLElement = null;
     private resizeTimeout: any = null;
     private colWidth: number = 0;
@@ -88,11 +88,15 @@ export class Social extends Control<ISocialOptions> {
 
                 [].forEach.call(self.days, (day: HTMLElement, index: number) => {
                     self.setContainerWidth(day);
-                    self.layouts[index] = new Masonry(day, {
+                    self.layouts[index] = new Isotope(day, {
                         itemSelector: self.options.item,
-                        columnWidth: '.col1',
-                        gutter: self.gutterWidth,
-                        fitWidth: true,
+                        masonry: {
+                            columnWidth: '.col1',
+                            gutter: self.gutterWidth,
+                            fitWidth: true,
+                            
+                        },
+
                         percentPosition: self.percentPosition
                     });
                 });
@@ -139,6 +143,16 @@ export class Social extends Control<ISocialOptions> {
             const social = <Social>el[stringSocial];
             if (social) {
                 social.doResize();
+            }
+        });
+    }
+
+    public static onFitWidth() {
+        const socialEl = document.querySelectorAll('[data-pages="social"]');
+        [].forEach.call(socialEl, function(el: HTMLElement) {
+            const social = <Social>el[stringSocial];
+            if (social) {
+                
             }
         });
     }
