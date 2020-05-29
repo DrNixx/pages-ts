@@ -13,6 +13,8 @@ export interface ISocialOptions extends IControlOptions {
     colWidth?: number|string,
     gutterWidth?: number|string,
     percentPosition?: boolean|string,
+    fitWidth?: boolean|string,
+    fitContainer?: boolean|string,
 }
 
 export class Social extends Control<ISocialOptions> {
@@ -25,6 +27,8 @@ export class Social extends Control<ISocialOptions> {
         colWidth: 300,
         gutterWidth: 20,
         percentPosition: false,
+        fitWidth: false,
+        fitContainer: false,
     }
 
     private cover: HTMLElement = null;
@@ -36,6 +40,8 @@ export class Social extends Control<ISocialOptions> {
     private colWidth: number = 0;
     private gutterWidth: number = 0;
     private percentPosition: boolean = false;
+    private fitWidth: boolean = false;
+    private fitContainer: boolean = false;
     
 
     constructor(element: string | HTMLElement, options: ISocialOptions) {
@@ -48,6 +54,8 @@ export class Social extends Control<ISocialOptions> {
         this.colWidth = toSafeInteger(this.options.colWidth);
         this.gutterWidth = toSafeInteger(this.options.gutterWidth);
         this.percentPosition = !!this.options.percentPosition;
+        this.fitWidth = !!this.options.fitWidth;
+        this.fitContainer = !!this.options.fitContainer;
 
         this.bind();
     }
@@ -81,11 +89,7 @@ export class Social extends Control<ISocialOptions> {
                 }
             }
            
-            setTimeout(function() {
-                if (!self.days || (self.days.length === 0)) {
-                    return;
-                }
-
+            if (self.days && (self.days.length > 0)) {
                 [].forEach.call(self.days, (day: HTMLElement, index: number) => {
                     self.setContainerWidth(day);
                     self.layouts[index] = new Isotope(day, {
@@ -93,23 +97,35 @@ export class Social extends Control<ISocialOptions> {
                         masonry: {
                             columnWidth: '.col1',
                             gutter: self.gutterWidth,
-                            fitWidth: true,
-                            
+                            fitWidth: this.fitWidth,               
                         },
 
                         percentPosition: self.percentPosition
                     });
-                });
-            }, 500);
+                });    
+            }
 
             self.element[stringSocial] = self;
         }
     }
 
-    public setContainerWidth = (day: HTMLElement) => {
-        if (!this.percentPosition) {
+    private fitContainersWidth = () => {
+        const self = this;
+        if (self.days && (self.days.length > 0)) {
+            [].forEach.call(self.days, (day: HTMLElement, index: number) => {
+                self.setContainerWidth(day);
+            });    
+        }
+    }
+
+    private setContainerWidth = (day: HTMLElement) => {
+        if (!this.percentPosition && this.fitContainer) {
             const currentColumns = Math.floor((day.parentElement.clientWidth - (this.gutterWidth * 5)) / this.colWidth);
-            day.style.width = (currentColumns * this.colWidth + ((currentColumns - 1) * 20)).toString() + "px";    
+            if (currentColumns > 1) {
+                day.style.width = (currentColumns * this.colWidth + ((currentColumns - 1) * 20)).toString() + "px";
+            } else {
+                day.style.width = "100%";
+            }   
         }
     }
 
@@ -152,7 +168,7 @@ export class Social extends Control<ISocialOptions> {
         [].forEach.call(socialEl, function(el: HTMLElement) {
             const social = <Social>el[stringSocial];
             if (social) {
-                
+                social.fitContainersWidth();
             }
         });
     }
