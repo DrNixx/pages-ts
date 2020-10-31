@@ -7,13 +7,13 @@ export interface IMobileViewOptions extends IControlOptions {
     onNavigate?: (view: string, animation: string) => void
 }
 
-export class MobileView extends Control<IMobileViewOptions> {
-    public static defaultProps: IMobileViewOptions = {
-        onNavigate: (view, animation) => {}
-    };
+const defaultProps: IMobileViewOptions = {
+    onNavigate: (view, animation) => {}
+};
 
+export class MobileView extends Control<IMobileViewOptions> {
     constructor(element: HTMLElement | string, options: IMobileViewOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
         this.bind();
     }
 

@@ -9,6 +9,12 @@ export interface IProgressOptions extends IControlOptions {
     thick? : boolean
 }
 
+const defaultProps: IProgressOptions = {
+    value: 0,
+    color: null,
+    thick: false
+};
+
 export class Progress extends Control<IProgressOptions> {
     shadow: HTMLDivElement;
     pRight: HTMLDivElement;
@@ -17,14 +23,8 @@ export class Progress extends Control<IProgressOptions> {
     value: number;
     private container: HTMLDivElement;
 
-    public static defaultProps: IProgressOptions = {
-        value: 0,
-        color: null,
-        thick: false
-    };
-
     constructor (public element: HTMLInputElement, options: IProgressOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
 
         const self = this;
 

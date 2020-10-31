@@ -17,20 +17,19 @@ export interface ISocialOptions extends IControlOptions {
     fitContainer?: boolean|string,
 }
 
-export class Social extends Control<ISocialOptions> {
-    
-    public static defaultProps: ISocialOptions = {
-        cover: '[data-social="cover"]',
-        day: '[data-social="day"]',
-        status: '[data-social="status"]',
-        item: '[data-social="item"]',
-        colWidth: 300,
-        gutterWidth: 20,
-        percentPosition: false,
-        fitWidth: false,
-        fitContainer: false,
-    }
+const defaultProps: ISocialOptions = {
+    cover: '[data-social="cover"]',
+    day: '[data-social="day"]',
+    status: '[data-social="status"]',
+    item: '[data-social="item"]',
+    colWidth: 300,
+    gutterWidth: 20,
+    percentPosition: false,
+    fitWidth: false,
+    fitContainer: false,
+};
 
+export class Social extends Control<ISocialOptions> {
     private cover: HTMLElement = null;
     private days: NodeListOf<HTMLElement>;
     private item: HTMLElement = null;
@@ -45,7 +44,7 @@ export class Social extends Control<ISocialOptions> {
     
 
     constructor(element: string | HTMLElement, options: ISocialOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
         
         this.cover = this.element.querySelector(this.options.cover);
         this.days = this.element.querySelectorAll(this.options.day);

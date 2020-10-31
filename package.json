@@ -1,6 +1,6 @@
 {
   "name": "pages-ts",
-  "version": "4.7.34",
+  "version": "4.7.35",
   "description": "TypeSctipt library for revox.io pages",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,18 +28,18 @@
     "velocity-animate": "^1.5.2"
   },
   "devDependencies": {
-    "@types/bootstrap": "^4.5.0",
+    "@types/bootstrap": "^4.5.1",
     "@types/isotope-layout": "^3.0.8",
-    "@types/jquery": "^3.3.38",
+    "@types/jquery": "^3.5.4",
     "@types/lodash-es": "^4.17.3",
-    "@types/masonry-layout": "^4.2.1",
-    "@types/node": "^10.17.24",
+    "@types/masonry-layout": "^4.2.2",
+    "@types/node": "^10.17.44",
     "@types/velocity-animate": "^1.2.33",
     "clean-webpack-plugin": "^3.0.0",
     "ts-loader": "^7.0.5",
-    "typescript": "^3.9.3",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
   }

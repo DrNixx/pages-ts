@@ -13,6 +13,13 @@ export interface ISearchOptions extends IControlOptions {
     onSearchSubmit?: (value: string) => void
 }
 
+const defaultProps: ISearchOptions = {
+    searchField: '[data-search="searchField"]',
+    closeButton: '[data-search="closeButton"]',
+    suggestions: '[data-search="suggestions"]',
+    brand: '.overlay-brand'
+};
+
 export class Search extends Control<ISearchOptions> {
 
     brand: HTMLElement;
@@ -22,15 +29,8 @@ export class Search extends Control<ISearchOptions> {
     private pressedKeys: string[];
     private ignoredKeys: string[];
 
-    public static defaultProps: ISearchOptions = {
-        searchField: '[data-search="searchField"]',
-        closeButton: '[data-search="closeButton"]',
-        suggestions: '[data-search="suggestions"]',
-        brand: '.overlay-brand'
-    }
-
     public constructor(element: string, options: ISearchOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
 
         this.pressedKeys = [];
         this.ignoredKeys = [];

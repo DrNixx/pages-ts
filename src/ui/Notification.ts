@@ -17,24 +17,24 @@ export interface INotificationOptions extends IControlOptions {
     onClosed?: (sender?: Notification) => void
 }
 
+const defaultProps: INotificationOptions = {
+    style: "simple",
+    message: null,
+    position: "top-right",
+    type: "info",
+    showClose: true,
+    timeout: 4000,
+    onShown: function() {},
+    onClosed: function() {}
+};
+
 export class Notification extends Control<INotificationOptions> {
     wrapper: HTMLDivElement;
     notification: HTMLDivElement;
     alert: HTMLDivElement;
 
-    public static defaultProps: INotificationOptions = {
-        style: "simple",
-        message: null,
-        position: "top-right",
-        type: "info",
-        showClose: true,
-        timeout: 4000,
-        onShown: function() {},
-        onClosed: function() {}
-    }
-
     constructor(element: HTMLElement | string, options: INotificationOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
 
         this.notification = document.createElement('div')
         this.notification.className = "pgn push-on-sidebar-open"

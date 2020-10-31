@@ -14,23 +14,23 @@ export interface IParallaxOptions extends IControlOptions {
     scrollElement?: string
 }
 
+const defaultProps: IParallaxOptions = {
+    photo: '.cover-photo',
+    content: '.inner',
+    speed: {
+        coverPhoto: 0.3,
+        content: 0.17
+    },
+    scrollElement: 'window'
+};
+
 export class Parallax extends Control<IParallaxOptions> {
 
     content: HTMLElement;
     coverPhoto: HTMLElement;
 
-    public static defaultProps: IParallaxOptions = {
-        photo: '.cover-photo',
-        content: '.inner',
-        speed: {
-            coverPhoto: 0.3,
-            content: 0.17
-        },
-        scrollElement: 'window'
-    }
-
     constructor(element: string | HTMLElement, options: IParallaxOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
         
         this.coverPhoto = this.element.querySelector(this.options.photo);     
         // TODO: rename .inner to .page-cover-content   

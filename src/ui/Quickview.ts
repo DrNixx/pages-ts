@@ -16,23 +16,23 @@ export interface IQuickviewOptions extends IControlOptions {
     backButton?: string,
 }
 
+const defaultProps: IQuickviewOptions = {
+    notes: '#note-views',
+    alerts: '#alerts',
+    chat: '#chat',
+    notesList: '.list',
+    noteEditor: '.quick-note-editor',
+    deleteNoteButton: '.delete-note-link',
+    deleteNoteConfirmButton: '.btn-remove-notes',
+    newNoteButton: '.new-note-link',
+    backButton: '.close-note-link'
+};
+
 export class Quickview extends Control<IQuickviewOptions> {
     bezierEasing: number[];
 
-    public static defaultProps: IQuickviewOptions = {
-        notes: '#note-views',
-        alerts: '#alerts',
-        chat: '#chat',
-        notesList: '.list',
-        noteEditor: '.quick-note-editor',
-        deleteNoteButton: '.delete-note-link',
-        deleteNoteConfirmButton: '.btn-remove-notes',
-        newNoteButton: '.new-note-link',
-        backButton: '.close-note-link'
-    };
-
     constructor(element: HTMLElement | string, options: IQuickviewOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
 
         this.bezierEasing = [.05, .74, .27, .99];
 

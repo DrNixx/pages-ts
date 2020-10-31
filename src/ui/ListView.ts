@@ -31,28 +31,28 @@ export interface IListViewOptions extends IControlOptions {
     selectors?: IListViewSelectors
 }
 
+const defaultProps: IListViewOptions = {
+    classes: {
+        animated: "list-view-animated",
+        container: "list-view-wrapper",
+        hidden: "list-view-hidden",
+        stationaryHeader: "list-view-fake-header"
+    },
+    selectors: {
+        groupContainer: ".list-view-group-container",
+        groupHeader: ".list-view-group-header",
+        stationaryHeader: "h2"
+    }
+};
+
 export class ListView extends Control<IListViewOptions> {
 
     elems: IListElement[];
     fakeHeader: HTMLElement;
     private listWrapper: HTMLElement;
 
-    public static defaultProps: IListViewOptions = {
-        classes: {
-            animated: "list-view-animated",
-            container: "list-view-wrapper",
-            hidden: "list-view-hidden",
-            stationaryHeader: "list-view-fake-header"
-        },
-        selectors: {
-            groupContainer: ".list-view-group-container",
-            groupHeader: ".list-view-group-header",
-            stationaryHeader: "h2"
-        }
-    }
-
     public constructor(element: string | HTMLElement, options: IListViewOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
 
         this.bind();
     }

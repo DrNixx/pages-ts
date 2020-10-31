@@ -19,6 +19,14 @@ export interface ISideBarOptions extends IControlOptions {
     css3d?: boolean;
 }
 
+const defaultProps: ISideBarOptions = {
+    pageContainer :".page-container",
+    cssAnimation: true,
+    css3d: true,
+    sideBarWidth: 280,
+    sideBarWidthCondensed: 280 - 70
+};
+
 export class SideBar extends Control<ISideBarOptions> {
     private pageContainer: HTMLElement;
     private sideBarWidthCondensed: number;
@@ -27,16 +35,8 @@ export class SideBar extends Control<ISideBarOptions> {
     private cssAnimation: boolean;
     private body: HTMLElement;
 
-    public static defaultProps: ISideBarOptions = {
-        pageContainer :".page-container",
-        cssAnimation: true,
-        css3d: true,
-        sideBarWidth: 280,
-        sideBarWidthCondensed: 280 - 70
-    };
-
     constructor (element: HTMLElement | string, options: ISideBarOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
 
         this.body = document.body
 
@@ -74,13 +74,15 @@ export class SideBar extends Control<ISideBarOptions> {
             pg.live('.sidebar-menu a', 'click', function(e) {
                 const element = <HTMLAnchorElement>this;
                 const li = <HTMLLIElement>element.parentNode;
+                const sub = <HTMLElement>li.querySelector(".sub-menu");
 
-                if (!li.querySelectorAll(".sub-menu")) {
+                if (!sub) {
                     return;
                 }
 
-                const parent = <HTMLElement>li.parentNode;
-                const sub = <HTMLElement>li.querySelector(".sub-menu");
+                e.preventDefault();
+
+                const parent = <HTMLElement>li.parentNode;                
                 if (pg.hasClass(li, sOpen)) {
                     pg.removeClass(element.querySelector(".arrow"), sOpen)
                     pg.removeClass(element.querySelector(".arrow"), sActive);

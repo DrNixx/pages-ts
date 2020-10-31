@@ -11,19 +11,19 @@ export interface ISelectOptions extends IControlOptions {
     onChange?: (el) => void
 }
 
-export class Select extends Control<ISelectOptions> {
-    public static defaultProps: ISelectOptions = {
-        newTab: true,
-        stickyPlaceholder: true,
-        wrapped: false,
-        container: 'body',
-        onChange: (el: HTMLElement) => {
-            const event = document.createEvent('HTMLEvents');
-            event.initEvent('change', true, false);
-            el.dispatchEvent(event);
-        }
-    };
+const defaultProps: ISelectOptions = {
+    newTab: true,
+    stickyPlaceholder: true,
+    wrapped: false,
+    container: 'body',
+    onChange: (el: HTMLElement) => {
+        const event = document.createEvent('HTMLEvents');
+        event.initEvent('change', true, false);
+        el.dispatchEvent(event);
+    }
+};
 
+export class Select extends Control<ISelectOptions> {
     private selEl: HTMLDivElement;
 
     private hasDefaultPlaceholder: boolean;
@@ -43,7 +43,7 @@ export class Select extends Control<ISelectOptions> {
     private preSelCurrent: number;
 
     constructor(element: HTMLSelectElement | string, options: ISelectOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
         this.bind();
     }
 

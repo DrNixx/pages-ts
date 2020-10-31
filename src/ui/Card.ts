@@ -24,32 +24,32 @@ export interface ICardOptions extends IControlOptions {
     onRefresh?: (sender?: Card) => void,
 }
 
+const defaultProps: ICardOptions = {
+    progress: 'circle',
+    progressColor: 'master',
+    refresh: false,
+    error: null,
+    overlayColor: '255,255,255',
+    overlayOpacity: 0.8,
+    refreshButton: '[data-toggle="refresh"]',
+    maximizeButton: '[data-toggle="maximize"]',
+    collapseButton: '[data-toggle="collapse"]',
+    closeButton: '[data-toggle="close"]',
+    onExpand: null,
+    onCollapse: null,
+    onClose: null,
+    onRestore: null,
+    onMaximize: null,
+    onRefresh: null,
+};
+
 export class Card extends Control<ICardOptions> {
 
     loader: HTMLElement;
     body: HTMLElement;
 
-    public static defaultProps: ICardOptions = {
-        progress: 'circle',
-        progressColor: 'master',
-        refresh: false,
-        error: null,
-        overlayColor: '255,255,255',
-        overlayOpacity: 0.8,
-        refreshButton: '[data-toggle="refresh"]',
-        maximizeButton: '[data-toggle="maximize"]',
-        collapseButton: '[data-toggle="collapse"]',
-        closeButton: '[data-toggle="close"]',
-        onExpand: null,
-        onCollapse: null,
-        onClose: null,
-        onRestore: null,
-        onMaximize: null,
-        onRefresh: null,
-    }
-
     constructor(element: string, options: ICardOptions) {
-        super(element, options);
+        super(element, options, defaultProps);
         
         this.loader = null;
         this.body = this.element.querySelector('.card-body');
