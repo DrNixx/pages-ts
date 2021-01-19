@@ -1,5 +1,5 @@
 import { DeviceSizeType } from './StyleConfig';
-import isNumber from 'lodash-es/isNumber'; 
+import isNumber from 'lodash/isNumber'; 
 
 declare var ActiveXObject: (type: string) => void;
 

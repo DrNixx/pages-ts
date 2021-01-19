@@ -1,6 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import forEach from 'lodash-es/forEach';
+import forEach from 'lodash/forEach';
 
 const stringQuickview = 'Quickview';
 

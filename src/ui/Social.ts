@@ -1,7 +1,7 @@
-import toSafeInteger from 'lodash-es/toSafeInteger'; 
+import toSafeInteger from 'lodash/toSafeInteger'; 
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import * as Isotope from 'isotope-layout';
+import Isotope from 'isotope-layout';
 
 const stringSocial = 'Social';
 
