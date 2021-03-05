@@ -68,23 +68,19 @@ export class Notification extends Control<INotificationOptions> {
     }
 
     private bind = () => {
-        if (!(stringNotification in this.element)) {
-            const self = this;
-            this.notification.appendChild(this.alert);
-            
-            if(pg.hasClass(document.body, 'horizontal-menu')){
-                this.alignWrapperToContainer()
-                pg.on(window, 'resize', this.alignWrapperToContainer);
-            }
-
-            // bind to Bootstrap closed event for alerts
-            pg.live('.close', 'click', function() {
-                self.close();
-                // refresh layout after removal
-            });
-
-            this.element[stringNotification] = this;
+        const self = this;
+        this.notification.appendChild(this.alert);
+        
+        if(pg.hasClass(document.body, 'horizontal-menu')){
+            this.alignWrapperToContainer()
+            pg.on(window, 'resize', this.alignWrapperToContainer);
         }
+
+        // bind to Bootstrap closed event for alerts
+        pg.live('.close', 'click', function() {
+            self.close();
+            // refresh layout after removal
+        });
     };
 
     private alignWrapperToContainer = () => {
