@@ -24,8 +24,8 @@ const defaultProps: INotificationOptions = {
     type: "info",
     showClose: true,
     timeout: 4000,
-    onShown: function() {},
-    onClosed: function() {}
+    onShown: () => {},
+    onClosed: () => {}
 };
 
 export class Notification extends Control<INotificationOptions> {
@@ -79,8 +79,7 @@ export class Notification extends Control<INotificationOptions> {
 
             // bind to Bootstrap closed event for alerts
             pg.live('.close', 'click', function() {
-                self.notification.remove();
-                self.options.onClosed();
+                self.close();
                 // refresh layout after removal
             });
 
@@ -226,14 +225,23 @@ export class Notification extends Control<INotificationOptions> {
                 Velocity.animate(self.notification, "fadeOut", { 
                     duration: 300,
                     complete:function(){
-                        self.notification.remove();
-                        self.options.onClosed();                
+                        self.close();
                     } 
               });
             }.bind(this), this.options.timeout);
         }
-
     }
+
+    public close = () => {
+        this.notification.remove();
+        this.options.onClosed();
+    };
 }
+
+export const notify = (options: INotificationOptions) => {
+    const note = new Notification(document.body, options);
+    note.show();
+    return note;
+};
 
 pg[stringNotification] = Notification;
