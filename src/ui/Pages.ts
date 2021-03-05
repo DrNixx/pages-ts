@@ -350,8 +350,13 @@ export class Pages {
     }
 
     public queryElement(selector, parent?: Element|Document): HTMLElement {
-        var lookUp = parent ? parent : document;
+        const lookUp = parent ? parent : document;
         return typeof selector === 'object' ? selector : lookUp.querySelector(selector);
+    }
+
+    public queryElements(selector: any, parent?: Element|Document): HTMLElement[] {
+        const lookUp = parent ? parent : document;
+        return <HTMLElement[]>[].slice.call(lookUp.querySelectorAll(selector));
     }
 
     public getClosest(elem: Node, selector) {
