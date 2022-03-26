@@ -61,20 +61,18 @@ export class ListView extends Control<IListViewOptions> {
         if (!(stringListView in this.element)) {
             const self = this;
 
-            const scope = this;
-
-            const isIOS = navigator.userAgent.match(/ipad|iphone|ipod/gi) ? true : false;
+            const isIOS = !!navigator.userAgent.match(/ipad|iphone|ipod/gi);
             
             //indicate that this is an ioslist
             pg.addClass(this.element, 'ioslist');
             //wrap all the children
-            var wrapper = document.createElement('div');
+            const wrapper = document.createElement('div');
             wrapper.className = this.options.classes.container;
             wrapper.setAttribute("data-ios", isIOS.toString());
 
             pg.wrapAll(this.element.childNodes, wrapper)
 
-            var newEl = document.createElement(this.options.selectors.stationaryHeader);
+            const newEl = document.createElement(this.options.selectors.stationaryHeader);
             this.element.insertBefore(newEl, this.element.childNodes[0]);
 
             this.listWrapper = this.element.querySelector('.' + this.options.classes.container);
@@ -116,8 +114,8 @@ export class ListView extends Control<IListViewOptions> {
     };
 
     private testPosition = () => {
-        var currentTop = this.listWrapper.scrollTop,
-            topElement, offscreenElement, topElementBottom, i = 0;
+        const currentTop = this.listWrapper.scrollTop;
+        let topElement, offscreenElement, topElementBottom, i = 0;
 
         while ((this.elems[i].listOffset - currentTop) <= 0) {
             topElement = this.elems[i];

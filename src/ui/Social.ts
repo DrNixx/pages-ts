@@ -30,17 +30,17 @@ const defaultProps: ISocialOptions = {
 };
 
 export class Social extends Control<ISocialOptions> {
-    private cover: HTMLElement = null;
+    private readonly cover: HTMLElement = null;
     private days: NodeListOf<HTMLElement>;
     private item: HTMLElement = null;
     private layouts: Isotope[] = [];
-    private status: HTMLElement = null;
+    private readonly status: HTMLElement = null;
     private resizeTimeout: any = null;
-    private colWidth: number = 0;
-    private gutterWidth: number = 0;
-    private percentPosition: boolean = false;
-    private fitWidth: boolean = false;
-    private fitContainer: boolean = false;
+    private readonly colWidth: number = 0;
+    private readonly gutterWidth: number = 0;
+    private readonly percentPosition: boolean = false;
+    private readonly fitWidth: boolean = false;
+    private readonly fitContainer: boolean = false;
     
 
     constructor(element: string | HTMLElement, options: ISocialOptions) {
@@ -68,7 +68,7 @@ export class Social extends Control<ISocialOptions> {
                 this.status && new stepsForm(this.status, {
                     onSubmit: function(form) {
                         pg.addClass(self.status.querySelector('.status-form-inner'),'hide');
-                        // form.submit()
+                        form.submit()
                         // show success message
                         const finalMessage  = <HTMLElement>self.status.querySelector('.final-message');
                         if(finalMessage) {
@@ -81,7 +81,7 @@ export class Social extends Control<ISocialOptions> {
             }
 
             // Prevent 'vh' bug on iOS7
-            if(pg.getUserAgent() == 'mobile'){
+            if(pg.isMobile()) {
                 //var wh = $(window).height();
                 if(this.cover) {
                     this.cover.style.height ="400px";
@@ -111,7 +111,7 @@ export class Social extends Control<ISocialOptions> {
     private fitContainersWidth = () => {
         const self = this;
         if (self.days && (self.days.length > 0)) {
-            [].forEach.call(self.days, (day: HTMLElement, index: number) => {
+            [].forEach.call(self.days, (day: HTMLElement) => {
                 self.setContainerWidth(day);
             });    
         }

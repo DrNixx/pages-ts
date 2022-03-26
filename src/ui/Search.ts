@@ -1,6 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import * as Velocity from "velocity-animate";
+import Velocity from "velocity-animate";
 
 const stringSearch = 'Search';
 
@@ -140,7 +140,7 @@ export class Search extends Control<ISearchOptions> {
             pg.off(document,'keypress',function(){})
         } else {
             const element = self.element;
-            Velocity.animate(element, "fadeOut", { 
+            element.velocity("fadeOut", {
                   duration: 200,
                   complete:function(){
                       pg.addClass(element,"hide")

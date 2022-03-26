@@ -22,7 +22,6 @@
         "src/**/*"
     ],
     "files": [
-        "src/index.ts",
-        "src/index-jquery.ts"
+        "src/index.ts"
     ]
 }

@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
     entry: {
         "core": ["./src/index.ts"],
-        "jquery-wrapper": ["./src/index-jquery.ts"],
     },
 
     module: {

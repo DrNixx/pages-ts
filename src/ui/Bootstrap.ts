@@ -12,7 +12,7 @@ export class Bootstrap {
             let content = '<select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">'
             const lis = drop.querySelectorAll('li');
             [].forEach.call(drop.querySelectorAll('li'), (li: HTMLLIElement) => {
-                var selected = "";
+                let selected = "";
 				
                 if (pg.hasClass(li, "active")) {
                     selected = "selected";
@@ -37,9 +37,9 @@ export class Bootstrap {
             drop.insertAdjacentHTML('afterend', content);
 			
             const select = <HTMLSelectElement>drop.nextSibling;
-            pg.addEvent(select, 'change', (e) => {
-                var optionSelected = select.querySelector("option:checked");
-                var valueSelected = (<HTMLOptionElement>optionSelected).value;
+            pg.addEvent(select, 'change', () => {
+                const optionSelected = select.querySelector("option:checked");
+                const valueSelected = (<HTMLOptionElement>optionSelected).value;
 
                 if (valueSelected.charAt(0) == "#") {
                     const link = drop.querySelector(`a[href="${valueSelected}"], a[data-target="${valueSelected}"]`);

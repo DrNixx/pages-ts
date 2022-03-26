@@ -16,7 +16,7 @@ const
   stringSideBar = 'SideBar',
   stringParallax = 'Parallax',
   stringMobileView = 'MobileView',
-  stringQuickView = 'Quickview',
+  stringQuickView = 'QuickView',
   stringProgress = 'Progress',
   stringListView = 'ListView',
   stringCard = 'Card',
@@ -66,11 +66,10 @@ const
 
 export class Pages {
     private pageScrollElement: string;
-    private body: HTMLBodyElement;
+    private readonly body: HTMLBodyElement;
 
-    public VERSION = "4.0.0";
-    public AUTHOR = "Revox";
-    public SUPPORT = "support@revox.io";
+    public VERSION = "5.0.0";
+    public SUPPORT = "support@chess-online.com";
 
     constructor() {
         this.pageScrollElement = 'html, body';
@@ -79,29 +78,13 @@ export class Pages {
     }
 
     public init() {
-        this.setUserOS();
         this.setUserAgent();
     }
 
-    /** 
-     * @function setUserOS
-     * @description SET User Operating System eg: mac,windows,etc
-     * @returns {void} - Appends OSName to Pages.$body
-     */
-     private setUserOS = (): void => {
-        let OSName = "";
-        if (navigator.appVersion.indexOf("Win") != -1) OSName = "windows";
-        if (navigator.appVersion.indexOf("Mac") != -1) OSName = "mac";
-        if (navigator.appVersion.indexOf("X11") != -1) OSName = "unix";
-        if (navigator.appVersion.indexOf("Linux") != -1) OSName = "linux";
-
-        this.addClass(this.body, OSName);
-    };
-
-    /** 
+    /**
      * @function setUserAgent
      * @description SET User Device Name to mobile | desktop
-     * @returns {void} - Appends Device to Pages.$body
+     * @returns {void} - Appends Device to body
      */
     private setUserAgent = (): void => {
         if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
@@ -114,28 +97,27 @@ export class Pages {
         }
     };
 
-    /** 
-     * @function getUserAgent
-     * @description Get Current User Agent.
-     * @returns {string} - mobile | desktop
-     */
-    public getUserAgent = (): string => {
-        return this.hasClass(this.body, "mobile") ? "mobile" : "desktop";
-    };
+    public isMobile = () => {
 
-    /** 
+        const uaDataIsMobile = window.navigator.userAgentData?.mobile
+        return typeof uaDataIsMobile === 'boolean'
+            ? uaDataIsMobile
+            : this.hasClass(this.body, "mobile")
+    }
+
+    /**
      * @function setFullScreen
      * @description Make Browser fullscreen.
      */
     public setFullScreen(element) {
         // Supports most browsers and their versions.
-        var requestMethod = 
+        const requestMethod =
             element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullscreen;
 
         if (requestMethod) { // Native full screen.
             requestMethod.call(element);
         } else if (typeof window['ActiveXObject'] !== "undefined") { // Older IE.
-            var wscript = new ActiveXObject("WScript.Shell");
+            const wscript = new ActiveXObject("WScript.Shell");
             if (wscript !== null) {
                 wscript.SendKeys("{F11}");
             }
@@ -159,8 +141,8 @@ export class Pages {
      */
     public getColor(color: string, opacity: string|number) {
         opacity = isNumber(opacity) ? opacity : parseFloat(opacity) || 1;
-        let elem: HTMLElement = null;
-        let colorElem: HTMLElement = null;
+        let elem: HTMLElement;
+        let colorElem: HTMLElement;
         if (document.querySelectorAll(".pg-colors").length) {
            elem = document.querySelector(".pg-colors");
         } else {
@@ -181,13 +163,12 @@ export class Pages {
         
         const style = this.getCurrentStyle(colorElem);
         color = style.backgroundColor;
-        var rgb = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        const rgb = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
         if (rgb == null) {
             return;
         }
 
-        var rgba = "rgba(" + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ', ' + opacity + ')';
-        return rgba;
+        return "rgba(" + rgb[1] + ", " + rgb[2] + ", " + rgb[3] + ', ' + opacity + ')';
     }
 
     public isVisible(element): boolean {
@@ -212,7 +193,7 @@ export class Pages {
             pgElement = document.getElementById(elementId);
         }
 
-        return (pgElement.offsetWidth === 0 && pgElement.offsetHeight === 0) ? false : true;
+        return !(pgElement.offsetWidth === 0 && pgElement.offsetHeight === 0);
     }
 
     /** 
@@ -266,7 +247,7 @@ export class Pages {
 
     // Init DATA API
     public initializeDataAPI = (component, constructor, collection) => {
-        for (var i=0; i < collection[length]; i++) {
+        for (let i = 0; i < collection[length]; i++) {
             new constructor(collection[i]);
         }
     }
@@ -328,13 +309,13 @@ export class Pages {
     }
 
     public wrapAll(elms: Node[] | NodeListOf<Node> | NodeListOf<ChildNode>, wrapper: HTMLElement) {
-        var parent = elms[0].parentNode;
-        var previousSibling = elms[0].previousSibling;
+        const parent = elms[0].parentNode;
+        const previousSibling = elms[0].previousSibling;
 
-        for (var i = 0; elms.length - i; wrapper.firstChild === elms[0] && i++) {
+        for (let i = 0; elms.length - i; wrapper.firstChild === elms[0] && i++) {
             wrapper.appendChild(elms[i]);
         }
-        var nextSibling = previousSibling ? previousSibling.nextSibling : parent.firstChild;
+        const nextSibling = previousSibling ? previousSibling.nextSibling : parent.firstChild;
         parent.insertBefore(wrapper, nextSibling);
 
         return wrapper;
@@ -360,7 +341,6 @@ export class Pages {
     }
 
     public getClosest(elem: Node, selector) {
-        const self = this;
         if (!Element.prototype.matches) {
 		    Element.prototype.matches =
 			    Element.prototype['matchesSelector'] ||
@@ -376,7 +356,7 @@ export class Pages {
                 };
 	    }
 
-        // Get closest match
+        // Get the closest match
         for ( ; elem && elem !== document; elem = elem.parentNode ) {
             if ((<Element>elem).matches( selector)) {
                 return <Element>elem;
@@ -388,7 +368,7 @@ export class Pages {
 
     public hasParent(e, p) {
         if (!e) return false;
-        var el = e.target || e.srcElement || e || false;
+        let el = e.target || e.srcElement || e || false;
         while (el && el != p) {
             el = el.parentNode || false;
         }
@@ -443,7 +423,7 @@ export class Pages {
 
     public extend<A>(a: A, b: A): A {
         if (b !== undefined) {
-            for (var key in b) {
+            for (let key in b) {
                 if (b.hasOwnProperty(key)) {
                     a[key] = b[key];
                 }

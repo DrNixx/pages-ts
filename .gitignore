@@ -3,6 +3,7 @@ dist
 built
 lib
 .vscode
+.idea
 
 public/*.js
 public/*.js.map

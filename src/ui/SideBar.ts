@@ -1,6 +1,5 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import * as Velocity from "velocity-animate";
 
 const stringSideBar = "SideBar";
 
@@ -33,7 +32,7 @@ export class SideBar extends Control<ISideBarOptions> {
     private sideBarWidth: number;
     private css3d: boolean;
     private cssAnimation: boolean;
-    private body: HTMLElement;
+    private readonly body: HTMLElement;
 
     constructor (element: HTMLElement | string, options: ISideBarOptions) {
         super(element, options, defaultProps);
@@ -45,7 +44,7 @@ export class SideBar extends Control<ISideBarOptions> {
         this.sideBarWidth = this.options.sideBarWidth;
         this.sideBarWidthCondensed = this.options.sideBarWidthCondensed;
         
-        var sidebarMenu = this.element.querySelectorAll('.sidebar-menu > ul');
+        // var sidebarMenu = this.element.querySelectorAll('.sidebar-menu > ul');
         this.pageContainer = <HTMLElement>document.querySelectorAll(this.options.pageContainer)[0];
 
         this.bind();
@@ -63,7 +62,7 @@ export class SideBar extends Control<ISideBarOptions> {
             pg.on(self.pageContainer, 'mouseover', self.closeSideBar);
 
             // add handler for menu toggler with attr "data-toggle" equal to data-pages
-            var dp = self.element.getAttribute("data-pages");
+            const dp = self.element.getAttribute("data-pages");
             if (dp) {
                 pg.live('[data-toggle="' + dp + '"]', 'click', function(e) {
                     e.preventDefault();
@@ -88,7 +87,7 @@ export class SideBar extends Control<ISideBarOptions> {
                     pg.removeClass(element.querySelector(".arrow"), sActive);
                     //Velocity(sub, "stop", true);
                     if (sub) {
-                        Velocity.animate(sub, "slideUp", { 
+                        sub.velocity("slideUp", {
                             duration: 200,
                             complete:function() {
                                 pg.removeClass(li, sOpen);
@@ -100,7 +99,7 @@ export class SideBar extends Control<ISideBarOptions> {
                     const openMenu = <HTMLLIElement>parent.querySelector("li." + sOpen);
                     if (openMenu) {
                         const openMenuSub = <HTMLElement>openMenu.querySelector(".sub-menu");
-                        Velocity.animate(openMenuSub, "slideUp", { 
+                        openMenuSub.velocity("slideUp", {
                             duration: 200,
                             complete:function() {
                                 pg.removeClass(openMenuSub, sOpen)
@@ -117,7 +116,7 @@ export class SideBar extends Control<ISideBarOptions> {
                     pg.addClass(element.querySelector(".arrow"), sActive);
                     //Velocity(sub, "stop", true);
                     if (sub) {
-                        Velocity.animate(sub, "slideDown", { 
+                        sub.velocity("slideDown", {
                             duration: 200,
                             complete:function(){
                                 pg.addClass(li, sOpen)
@@ -134,7 +133,7 @@ export class SideBar extends Control<ISideBarOptions> {
                 const elId = this.getAttribute('data-pages-toggle');
                 if (elId != null) {
                     //Only by ID
-                    const el = document.getElementById(elId.substr(1));
+                    const el = document.getElementById(elId.substring(1));
                     pg.toggleClass(el, sShow);
                 }
             });
@@ -147,11 +146,11 @@ export class SideBar extends Control<ISideBarOptions> {
         }
     }
 
-    private openSideBar = (e) => {
+    private openSideBar = () => {
         const self = this;
-        var _sideBarWidthCondensed = pg.hasClass(self.body, "rtl") ? - self.sideBarWidthCondensed : self.sideBarWidthCondensed;
+        const _sideBarWidthCondensed = pg.hasClass(self.body, "rtl") ? - self.sideBarWidthCondensed : self.sideBarWidthCondensed;
 
-         var menuOpenCSS = self.css3d == true ? 
+         const menuOpenCSS = self.css3d == true ?
             'translate3d(' + _sideBarWidthCondensed + 'px, 0,0)' : 
             'translate(' + _sideBarWidthCondensed + 'px, 0)';
 
@@ -171,9 +170,9 @@ export class SideBar extends Control<ISideBarOptions> {
          pg.addClass(self.body,'sidebar-visible');
     }
 
-    private closeSideBar = (e) => {
+    private closeSideBar = () => {
         const self = this;
-        var menuClosedCSS = self.css3d == true ? 
+        const menuClosedCSS = self.css3d == true ?
             'translate3d(0, 0,0)' : 
             'translate(0, 0)';
 
@@ -201,17 +200,15 @@ export class SideBar extends Control<ISideBarOptions> {
 
     private toggleSidebar = () => {
         const self = this;
-         let timer;
          const bodyStyles = window.getComputedStyle ? getComputedStyle(self.body, null) : self.body.style;
          self.pageContainer.style.backgroundColor = bodyStyles.backgroundColor;
 
          if (pg.hasClass(self.body,'sidebar-' + sOpen)) {
              pg.removeClass(self.body,'sidebar-' + sOpen);
-             timer = setTimeout(function() {
+             setTimeout(function() {
                  pg.removeClass(self.element,'visible');
              }.bind(self), 400);
          } else {
-             clearTimeout(timer);
              pg.addClass(self.element,'visible');
              setTimeout(function() {
                  pg.addClass(self.body,'sidebar-' + sOpen);
@@ -238,11 +235,11 @@ export class SideBar extends Control<ISideBarOptions> {
 
     // public method
     public close() {
-        this.closeSideBar(undefined);
+        this.closeSideBar();
     }
 
     public open() {
-        this.openSideBar(undefined);
+        this.openSideBar();
     }
 
     public menuPin(toggle) {

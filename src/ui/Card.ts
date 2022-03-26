@@ -1,7 +1,7 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import { Notification } from "./Notification";
-import * as Velocity from "velocity-animate";
+import Velocity from "velocity-animate";
 
 const stringCard = 'Card';
 
@@ -63,12 +63,12 @@ export class Card extends Control<ICardOptions> {
     private bind = () => {
         // init events 
         if (!(stringCard in this.element)) {
-            var self = this;
+            const self = this;
             
-            var btnCollapse = self.element.querySelector(self.options.collapseButton);
-            var btnClose = self.element.querySelector(self.options.closeButton);
-            var btnRefresh = self.element.querySelector(self.options.refreshButton);
-            var btnMaximize = self.element.querySelector(self.options.maximizeButton);
+            const btnCollapse = self.element.querySelector(self.options.collapseButton);
+            const btnClose = self.element.querySelector(self.options.closeButton);
+            const btnRefresh = self.element.querySelector(self.options.refreshButton);
+            const btnMaximize = self.element.querySelector(self.options.maximizeButton);
 
             if (btnCollapse){
                 pg.on(btnCollapse, 'click', function(e) {
@@ -119,9 +119,8 @@ export class Card extends Control<ICardOptions> {
         const heading = this.element.querySelector('.card-header');
   
         if (pg.hasClass(this.element, 'card-collapsed')) {
-            Velocity.animate(this.body, "slideDown", { 
+            this.body.velocity("slideDown", {
                 duration: 200,
-                complete: function(){ }
             });
 
             pg.removeClass(this.element,'card-collapsed');
@@ -136,9 +135,9 @@ export class Card extends Control<ICardOptions> {
 
             return;
         } else {
-            Velocity.animate(this.body, "slideUp", { 
+            this.body.velocity("slideUp", {
                 duration: 200,
-                complete: function(){ } 
+                complete: function(){ }
             });
         }
 
@@ -175,18 +174,18 @@ export class Card extends Control<ICardOptions> {
                 this.options.onRestore(this);
             }
         } else {
-            var sidebar = document.querySelector('[data-pages="sidebar"]');
-            var header = document.querySelector('.header');
-            var sidebarWidth = 0;
-            var headerHeight = 0;
+            const sidebar = document.querySelector('[data-pages="sidebar"]');
+            const header = document.querySelector('.header');
+            let sidebarWidth = 0;
+            let headerHeight = 0;
 
             if (sidebar) {
-                var rect = window.getComputedStyle(sidebar, null);
+                const rect = window.getComputedStyle(sidebar, null);
                 sidebarWidth = parseInt(rect.left) + parseInt(rect.width);
             }
             
-            if(header){
-                var rect = window.getComputedStyle(header, null);
+            if (header) {
+                const rect = window.getComputedStyle(header, null);
                 headerHeight = parseInt(rect.height);
             }
   
@@ -253,7 +252,7 @@ export class Card extends Control<ICardOptions> {
                 pg.addClass(iconNew,'active');
             } else {
                 elem.className = "progress progress-small";
-                var child = document.createElement("div");
+                const child = document.createElement("div");
                 child.className = "progress-bar-indeterminate progress-bar-" + self.options.progressColor;
                 elem.appendChild(child);
             }
@@ -268,8 +267,8 @@ export class Card extends Control<ICardOptions> {
                 self.element.appendChild(_loader);
             }.bind(this), 300);
             // End fix
-  
-            Velocity.animate(self.loader, "fadeIn", { 
+
+            self.loader.velocity("fadeIn", {
                 duration: 200,
                 complete: function() {
                 }
@@ -281,7 +280,7 @@ export class Card extends Control<ICardOptions> {
   
         } else {
             const self = this;
-            Velocity.animate(this.loader, "fadeOut", { 
+            this.loader.velocity("fadeOut", {
               duration: 200,
               complete: function() {
                   self.loader.remove();
@@ -310,7 +309,7 @@ export class Card extends Control<ICardOptions> {
                     type: 'danger',
                     onShown: function() {
                         const elem: HTMLElement = self.loader.querySelector(':scope > div')
-                        Velocity.animate(elem, "fadeOut", { 
+                        elem.velocity("fadeOut", {
                             duration: 200,
                             complete:function() {      
                             }, 

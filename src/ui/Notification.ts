@@ -1,6 +1,5 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import * as Velocity from "velocity-animate";
 
 const stringNotification = 'Notification';
 
@@ -89,14 +88,14 @@ export class Notification extends Control<INotificationOptions> {
 
         const parentNode: HTMLElement = <HTMLElement>element.parentNode;
 
-        var containerPosition = element.getBoundingClientRect();
-        var containerHeight = element.getBoundingClientRect().height;
-        var containerWidth = element.getBoundingClientRect().width;
+        const containerPosition = element.getBoundingClientRect();
+        const containerHeight = element.getBoundingClientRect().height;
+        const containerWidth = element.getBoundingClientRect().width;
 
-        var containerTop = containerPosition.top
-        var containerBottom = parentNode.getBoundingClientRect().height - (containerTop + containerHeight)
-        var containerLeft = containerPosition.left
-        var containerRight = parentNode.getBoundingClientRect().width - (containerLeft + containerWidth)
+        const containerTop = containerPosition.top
+        const containerBottom = parentNode.getBoundingClientRect().height - (containerTop + containerHeight)
+        const containerLeft = containerPosition.left
+        const containerRight = parentNode.getBoundingClientRect().width - (containerLeft + containerWidth)
 
         if(/top/.test(this.options.position)) {
             this.wrapper.style.top = containerTop + 'px';
@@ -121,15 +120,15 @@ export class Notification extends Control<INotificationOptions> {
 
         this.alert.insertAdjacentText("afterbegin", this.options.message);
         if (this.options.showClose) {
-            var close = document.createElement('button')
+            const close = document.createElement('button')
             close.setAttribute('type', 'button')
             close.className = 'close'
             close.dataset.dismiss="alert"
 
-            var icon1 = document.createElement('span')
+            const icon1 = document.createElement('span')
             icon1.setAttribute('aria-hidde', 'true')
             icon1.innerHTML = '&times;'
-            var icon2 = document.createElement('span')
+            const icon2 = document.createElement('span')
             icon2.className = 'sr-only'
             icon2.innerHTML = 'Close'
 
@@ -144,13 +143,13 @@ export class Notification extends Control<INotificationOptions> {
         pg.addClass(this.notification, 'pgn-bar');
         pg.addClass(this.alert, 'alert-' + this.options.type);
 
-        var container = document.createElement('div')
+        const container = document.createElement('div')
         container.className = "container"
 
         container.innerHTML = '<span>' + this.options.message + '</span>';
 
         if (this.options.showClose) {
-            var close = document.createElement('button')
+            const close = document.createElement('button')
             close.setAttribute('type', 'button')
             close.className = 'close'
             close.dataset.dismiss="alert"
@@ -167,7 +166,7 @@ export class Notification extends Control<INotificationOptions> {
 
         pg.addClass(this.notification, 'pgn-circle');
 
-        var table = '<div>';
+        let table = '<div>';
         if (this.options.thumbnail) {
             table += '<div class="pgn-thumbnail"><div>' + this.options.thumbnail + '</div></div>';
         }
@@ -188,7 +187,7 @@ export class Notification extends Control<INotificationOptions> {
 
 
         this.alert.innerHTML = table;
-        var clearfix = document.createElement('div')
+        const clearfix = document.createElement('div')
         clearfix.className = 'clearfix'
         // self.alert.parentNode.insertBefore(clearfix, self.alert.nextSibling);
 
@@ -198,7 +197,7 @@ export class Notification extends Control<INotificationOptions> {
         pg.addClass(this.notification, 'pgn-flip');
         this.alert.innerHTML = "<span>" + this.options.message + "</span>";
         if (this.options.showClose) {
-            var close = document.createElement('button')
+            const close = document.createElement('button')
             close.setAttribute('type', 'button')
             close.className = 'close'
             close.dataset.dismiss="alert"
@@ -218,12 +217,14 @@ export class Notification extends Control<INotificationOptions> {
             const self = this;
             // settimeout removes scope. use .bind(this)
             setTimeout(function() {
-                Velocity.animate(self.notification, "fadeOut", { 
+                self.notification.velocity({
+                    opacity: 0
+                }, {
                     duration: 300,
                     complete:function(){
                         self.close();
-                    } 
-              });
+                    }
+                });
             }.bind(this), this.options.timeout);
         }
     }
