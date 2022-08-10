@@ -26,7 +26,7 @@
     "isotope-layout": "^3.0.6",
     "lodash": "^4.17.21",
     "masonry-layout": "^4.2.2",
-    "velocity-animate": "^2.0.6"
+    "velocity-animate": "^1.5.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.9",

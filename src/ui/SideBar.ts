@@ -1,7 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import Velocity from "velocity-animate";
-import "velocity-animate/velocity.ui.min.js";
 
 const stringSideBar = "SideBar";
 
@@ -88,7 +87,7 @@ export class SideBar extends Control<ISideBarOptions> {
                     pg.removeClass(element.querySelector(".arrow"), sOpen)
                     pg.removeClass(element.querySelector(".arrow"), sActive);
                     if (sub) {
-                        sub.velocity("slideUp", {
+                        Velocity(sub, "slideUp", {
                             duration: 200,
                             complete:function() {
                                 pg.removeClass(li, sOpen);
@@ -100,7 +99,7 @@ export class SideBar extends Control<ISideBarOptions> {
                     const openMenu = <HTMLLIElement>parent.querySelector("li." + sOpen);
                     if (openMenu) {
                         const openMenuSub = <HTMLElement>openMenu.querySelector(".sub-menu");
-                        openMenuSub.velocity("slideUp", {
+                        Velocity(openMenuSub, "slideUp", {
                             duration: 200,
                             complete:function() {
                                 pg.removeClass(openMenuSub, sOpen)
@@ -116,7 +115,7 @@ export class SideBar extends Control<ISideBarOptions> {
                     pg.addClass(element.querySelector(".arrow"), sOpen);
                     pg.addClass(element.querySelector(".arrow"), sActive);
                     if (sub) {
-                        sub.velocity("slideDown", {
+                        Velocity(sub, "slideDown", {
                             duration: 200,
                             complete:function(){
                                 pg.addClass(li, sOpen)

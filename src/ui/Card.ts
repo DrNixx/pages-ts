@@ -2,7 +2,6 @@ import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import { Notification } from "./Notification";
 import Velocity from "velocity-animate";
-import "velocity-animate/velocity.ui.min.js";
 
 const stringCard = 'Card';
 
@@ -120,7 +119,7 @@ export class Card extends Control<ICardOptions> {
         const heading = this.element.querySelector('.card-header');
   
         if (pg.hasClass(this.element, 'card-collapsed')) {
-            this.body.velocity("slideDown", {
+            Velocity(this.body, "slideDown", {
                 duration: 200,
             });
 
@@ -136,7 +135,7 @@ export class Card extends Control<ICardOptions> {
 
             return;
         } else {
-            this.body.velocity("slideUp", {
+            Velocity(this.body, "slideUp", {
                 duration: 200,
                 complete: function(){ }
             });
@@ -269,7 +268,7 @@ export class Card extends Control<ICardOptions> {
             }.bind(this), 300);
             // End fix
 
-            self.loader.velocity("fadeIn", {
+            Velocity(self.loader, "fadeIn", {
                 duration: 200,
                 complete: function() {
                 }
@@ -281,7 +280,7 @@ export class Card extends Control<ICardOptions> {
   
         } else {
             const self = this;
-            this.loader.velocity("fadeOut", {
+            Velocity(this.loader, "fadeOut", {
               duration: 200,
               complete: function() {
                   self.loader.remove();
@@ -310,7 +309,7 @@ export class Card extends Control<ICardOptions> {
                     type: 'danger',
                     onShown: function() {
                         const elem: HTMLElement = self.loader.querySelector(':scope > div')
-                        elem.velocity("fadeOut", {
+                        Velocity(elem, "fadeOut", {
                             duration: 200,
                             complete:function() {      
                             }, 

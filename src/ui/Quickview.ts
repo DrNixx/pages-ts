@@ -2,7 +2,6 @@ import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import forEach from 'lodash/forEach';
 import Velocity from "velocity-animate";
-import "velocity-animate/velocity.ui.min.js";
 
 const stringQuickview = 'Quickview';
 
@@ -72,7 +71,7 @@ export class Quickview extends Control<IQuickviewOptions> {
                 var fadeClass = checkboxes[0].style.display === 'none' ? "fadeIn" : "fadeOut";
         
                 forEach(checkboxes, function(checkbox) {
-                    checkbox.velocity(fadeClass, {
+                    Velocity(checkbox, fadeClass, {
                         duration: 200,
                         complete:function(){                  
                         } 
@@ -80,7 +79,7 @@ export class Quickview extends Control<IQuickviewOptions> {
                 });
         
                 var deleteConfirm = pg.queryElement(self.options.deleteNoteConfirmButton)
-                    deleteConfirm.velocity(fadeClass, {
+                    Velocity(deleteConfirm, fadeClass, {
                         duration: 200,
                         complete:function(){   
                             pg.removeClass(deleteConfirm, 'hide')               

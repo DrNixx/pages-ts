@@ -1,5 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
+import Velocity from "velocity-animate";
 
 const stringNotification = 'Notification';
 
@@ -217,7 +218,7 @@ export class Notification extends Control<INotificationOptions> {
             const self = this;
             // settimeout removes scope. use .bind(this)
             setTimeout(function() {
-                self.notification.velocity({
+                Velocity(self.notification, {
                     opacity: 0
                 }, {
                     duration: 300,
