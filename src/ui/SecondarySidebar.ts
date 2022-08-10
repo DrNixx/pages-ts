@@ -1,6 +1,7 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import Velocity from "velocity-animate";
+import "velocity-animate/velocity.ui.min.js";
 
 const stringSecondarySidebar = 'SecondarySidebar';
 
@@ -70,7 +71,6 @@ export class SecondarySidebar extends Control<ISecondarySidebarOptions> {
                     
                     pg.addClass(element.querySelector(".arrow"), sOpen);
                     pg.addClass(element.querySelector(".arrow"), sActive);
-                    //Velocity(sub, "stop", true);
                     if (sub) {
                         sub.velocity("slideDown", {
                             duration: 200,

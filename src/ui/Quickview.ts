@@ -2,6 +2,7 @@ import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import forEach from 'lodash/forEach';
 import Velocity from "velocity-animate";
+import "velocity-animate/velocity.ui.min.js";
 
 const stringQuickview = 'Quickview';
 

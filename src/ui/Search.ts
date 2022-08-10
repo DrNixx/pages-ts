@@ -1,6 +1,7 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import Velocity from "velocity-animate";
+import "velocity-animate/velocity.ui.min.js";
 
 const stringSearch = 'Search';
 

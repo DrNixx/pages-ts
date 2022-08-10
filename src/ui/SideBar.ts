@@ -1,5 +1,7 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
+import Velocity from "velocity-animate";
+import "velocity-animate/velocity.ui.min.js";
 
 const stringSideBar = "SideBar";
 
@@ -85,7 +87,6 @@ export class SideBar extends Control<ISideBarOptions> {
                 if (pg.hasClass(li, sOpen)) {
                     pg.removeClass(element.querySelector(".arrow"), sOpen)
                     pg.removeClass(element.querySelector(".arrow"), sActive);
-                    //Velocity(sub, "stop", true);
                     if (sub) {
                         sub.velocity("slideUp", {
                             duration: 200,
@@ -114,7 +115,6 @@ export class SideBar extends Control<ISideBarOptions> {
                     
                     pg.addClass(element.querySelector(".arrow"), sOpen);
                     pg.addClass(element.querySelector(".arrow"), sActive);
-                    //Velocity(sub, "stop", true);
                     if (sub) {
                         sub.velocity("slideDown", {
                             duration: 200,
