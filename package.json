@@ -6,11 +6,15 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "webpack serve --progress --config webpack.dev.js",
-    "dev": "webpack --config webpack.dev.js",
-    "prod": "webpack --config webpack.prod.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build"
+    "build:lib": "tsc",
+    "build:bundle": "vite build",
+    "dev": "vite build --mode development && xcopy /E /I /Y dist-dev\\* public\\pages\\js && rmdir /S /Q dist-dev",
+    "prod": "vite build",
+    "serve": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepublishOnly": "npm run build:lib && npm run build:bundle"
   },
   "keywords": [
     "pages",
@@ -29,17 +33,16 @@
     "velocity-animate": "^2.0.6"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
     "@types/bootstrap": "^5.1.9",
     "@types/isotope-layout": "^3.0.8",
     "@types/lodash": "^4.14.168",
     "@types/masonry-layout": "^4.2.2",
     "@types/node": "^22.7.4",
-    "clean-webpack-plugin": "^4.0.0",
-    "ts-loader": "^9.2.6",
+    "jsdom": "^29.0.1",
     "typescript": "^5.6.2",
-    "webpack": "^5.24.3",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0",
-    "webpack-merge": "^6.0.1"
+    "vite": "^8.0.3",
+    "vitest": "^4.1.2"
   }
 }

@@ -32,6 +32,9 @@
     "include": [
         "src/**/*"
     ],
+    "exclude": [
+        "src/**/*.test.ts"
+    ],
     "files": [
         "src/index.ts"
     ]
