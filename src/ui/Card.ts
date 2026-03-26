@@ -1,7 +1,7 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
 import { Notification } from "./Notification";
-import Velocity from "velocity-animate";
+import { Velocity } from "velocity-animate";
 
 const stringCard = 'Card';
 

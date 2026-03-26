@@ -1,6 +1,6 @@
 import { pg } from "./Pages";
 import { Control, IControlOptions } from "./Control";
-import Velocity from "velocity-animate";
+import { Velocity } from "velocity-animate";
 
 const stringNotification = 'Notification';
 
