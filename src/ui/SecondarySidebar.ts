@@ -1,6 +1,6 @@
 import { pg } from "./Pages";
 import { Control, type IControlOptions } from "./Control";
-import { Velocity } from "velocity-animate";
+import Velocity from "velocity-animate";
 
 const stringSecondarySidebar = 'SecondarySidebar';
 
