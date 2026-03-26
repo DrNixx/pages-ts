@@ -23,7 +23,6 @@
   "author": "Nick Panteleeff",
   "license": "MIT",
   "dependencies": {
-    "es5-ext": "0.10.53",
     "isotope-layout": "^3.0.6",
     "lodash": "^4.17.21",
     "masonry-layout": "^4.2.2",

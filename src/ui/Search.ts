@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 import { Velocity } from "velocity-animate";
 
 const stringSearch = 'Search';
@@ -26,14 +26,14 @@ export class Search extends Control<ISearchOptions> {
     suggestions: HTMLElement;
     closeButton: HTMLElement;
     searchField: HTMLInputElement;
-    private pressedKeys: string[];
-    private ignoredKeys: string[];
+    //private pressedKeys: string[];
+    //private ignoredKeys: string[];
 
     public constructor(element: string, options: ISearchOptions) {
         super(element, options, defaultProps);
 
-        this.pressedKeys = [];
-        this.ignoredKeys = [];
+        //this.pressedKeys = [];
+        //this.ignoredKeys = [];
 
         //Cache elements
         this.searchField = this.element.querySelector(this.options.searchField);
@@ -49,14 +49,14 @@ export class Search extends Control<ISearchOptions> {
             const self = this;
         
             pg.on(self.searchField, 'keyup', function(e) {
-                const el = <HTMLInputElement>e.target;
+                const el = e.target as HTMLInputElement;
                 if (self.suggestions) {
                     self.suggestions.innerHTML = el.value;
                 }
             });
 
             pg.on(self.searchField, 'keyup', function(e: Event) {
-                const ke = <KeyboardEvent>e;
+                const ke = e as KeyboardEvent;
                 self.options.onKeyEnter && self.options.onKeyEnter(self.searchField.value);
                 if (ke.keyCode == 13) { //Enter pressed
                     ke.preventDefault();
@@ -68,22 +68,22 @@ export class Search extends Control<ISearchOptions> {
                 }
             });
 
-            pg.on(self.closeButton,'click', function(e) {
+            pg.on(self.closeButton,'click', function(_e) {
                 self.toggleOverlay('hide');
             });
 
             pg.on(self.element,'click', function(e) {
-                if ((<HTMLElement>e.target).getAttribute('data-pages') === 'search') {
+                if ((e.target as HTMLElement).getAttribute('data-pages') === 'search') {
                     self.toggleOverlay('hide');              
                 }
             });
 
             pg.on(document, 'keypress', function(e: Event) {
-                self.keypress(<KeyboardEvent>e);
+                self.keypress(e as KeyboardEvent);
             });
 
             pg.on(document, 'keyup', function(e: Event) {
-                const ke = <KeyboardEvent>e;
+                const ke = e as KeyboardEvent;
 
                 // Dismiss overlay on ESC is pressed
                 // .is(':visible') in vanilla JS
@@ -93,7 +93,7 @@ export class Search extends Control<ISearchOptions> {
             });
 
             pg.live('[data-toggle="search"]', 'click', function(e) {
-                const el = <HTMLElement>(e.target);
+                const el = (e.target as HTMLElement);
                 if (el.nodeName === 'A') {
                     e.preventDefault();
                 }
@@ -106,7 +106,7 @@ export class Search extends Control<ISearchOptions> {
     }
 
     private keypress = (e: KeyboardEvent) => {
-        const el = <HTMLElement>e.target;
+        const el = e.target as HTMLElement;
         const nodeName = el.nodeName;
         if (pg.hasClass(document.body, 'overlay-disabled') ||
             pg.hasClass(el, 'js-input') ||
@@ -155,7 +155,7 @@ export class Search extends Control<ISearchOptions> {
                     pg.toggleClass(self.brand, 'invisible')
                 }
                 pg.on(document, 'keypress', function(e: Event) {
-                    self.keypress(<KeyboardEvent>e);
+                    self.keypress(e as KeyboardEvent);
                 });
             }, 10);
         }

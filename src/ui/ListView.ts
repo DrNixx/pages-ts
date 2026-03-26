@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 
 const stringListView = 'ListView';
 
@@ -96,7 +96,7 @@ export class ListView extends Control<IListViewOptions> {
         self.elems = [];
         const groupContainers = self.element.querySelectorAll(self.options.selectors.groupContainer);
         [].forEach.call(groupContainers, function(el: HTMLElement) {
-            const tmp_header = <HTMLElement>el.querySelector(self.options.selectors.groupHeader);
+            const tmp_header = el.querySelector(self.options.selectors.groupHeader) as HTMLElement;
             const tmp_wrapper_rect = self.listWrapper.getBoundingClientRect();
             const tmp_rect  = el.getBoundingClientRect();
             const tmp_styles = window.getComputedStyle(tmp_header, null);
@@ -115,13 +115,13 @@ export class ListView extends Control<IListViewOptions> {
 
     private testPosition = () => {
         const currentTop = this.listWrapper.scrollTop;
-        let topElement, offscreenElement, topElementBottom, i = 0;
+        let topElement, topElementBottom, i = 0;
 
         while ((this.elems[i].listOffset - currentTop) <= 0) {
             topElement = this.elems[i];
             topElementBottom = topElement.listBottom - currentTop;
             if (topElementBottom < -topElement.headerHeight) {
-                offscreenElement = topElement;
+                // offscreenElement = topElement;
             }
             i++;
             if (i >= this.elems.length) {

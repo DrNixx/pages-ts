@@ -1,11 +1,10 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 import { Velocity } from "velocity-animate";
 
 const stringSecondarySidebar = 'SecondarySidebar';
 
 const 
-    sShow       = 'show',
     sOpen       = 'open',
     sActive     = 'active';
 
@@ -28,16 +27,16 @@ export class SecondarySidebar extends Control<ISecondarySidebarOptions> {
         if (!(stringSecondarySidebar in this.element)) {
             const self = this;
 
-            pg.live('.main-menu li a', 'click', function(e) {
-                const element = <HTMLAnchorElement>this;
-                const li = <HTMLLIElement>element.parentNode;
+            pg.live('.main-menu li a', 'click', function(_e) {
+                const element = this as HTMLAnchorElement;
+                const li = element.parentNode as HTMLLIElement;
 
                 if (!li.querySelectorAll(".sub-menu")) {
                     return;
                 }
 
-                const parent = <HTMLElement>li.parentNode;
-                const sub = <HTMLElement>li.querySelector(".sub-menu");
+                const parent = li.parentNode as HTMLElement;
+                const sub = li.querySelector(".sub-menu") as HTMLElement;
    
                 if (pg.hasClass(li, sOpen)) {
                     pg.removeClass(element.querySelector(".arrow"), sOpen)
@@ -52,9 +51,9 @@ export class SecondarySidebar extends Control<ISecondarySidebarOptions> {
                         });    
                     }   
                 } else {
-                    const openMenu = <HTMLLIElement>parent.querySelector("li." + sOpen);
+                    const openMenu = parent.querySelector("li." + sOpen) as HTMLLIElement;
                     if (openMenu) {
-                        const openMenuSub = <HTMLElement>openMenu.querySelector(".sub-menu");
+                        const openMenuSub = openMenu.querySelector(".sub-menu") as HTMLElement;
                         Velocity(openMenuSub, "slideUp", {
                             duration: 200,
                             complete:function() {

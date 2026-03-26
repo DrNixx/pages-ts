@@ -1,12 +1,10 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 import { Velocity } from "velocity-animate";
 
 const stringSideBar = "SideBar";
 
 const 
-    dataToggle = 'data-toggle',
-
     sShow       = 'show',
     sOpen       = 'open',
     sActive     = 'active';
@@ -30,9 +28,7 @@ const defaultProps: ISideBarOptions = {
 export class SideBar extends Control<ISideBarOptions> {
     private pageContainer: HTMLElement;
     private sideBarWidthCondensed: number;
-    private sideBarWidth: number;
     private css3d: boolean;
-    private cssAnimation: boolean;
     private readonly body: HTMLElement;
 
     constructor (element: HTMLElement | string, options: ISideBarOptions) {
@@ -40,13 +36,11 @@ export class SideBar extends Control<ISideBarOptions> {
 
         this.body = document.body
 
-        this.cssAnimation = this.options.cssAnimation;
         this.css3d = this.options.css3d;
-        this.sideBarWidth = this.options.sideBarWidth;
         this.sideBarWidthCondensed = this.options.sideBarWidthCondensed;
         
         // var sidebarMenu = this.element.querySelectorAll('.sidebar-menu > ul');
-        this.pageContainer = <HTMLElement>document.querySelectorAll(this.options.pageContainer)[0];
+        this.pageContainer = document.querySelectorAll(this.options.pageContainer)[0] as HTMLElement;
 
         this.bind();
     }
@@ -72,9 +66,9 @@ export class SideBar extends Control<ISideBarOptions> {
             }
 
             pg.live('.sidebar-menu a', 'click', function(e) {
-                const element = <HTMLAnchorElement>this;
-                const li = <HTMLLIElement>element.parentNode;
-                const sub = <HTMLElement>li.querySelector(".sub-menu");
+                const element = this as HTMLAnchorElement;
+                const li = element.parentNode as HTMLLIElement;
+                const sub = li.querySelector(".sub-menu") as HTMLElement;
 
                 if (!sub) {
                     return;
@@ -82,7 +76,7 @@ export class SideBar extends Control<ISideBarOptions> {
 
                 e.preventDefault();
 
-                const parent = <HTMLElement>li.parentNode;                
+                const parent = li.parentNode as HTMLElement;
                 if (pg.hasClass(li, sOpen)) {
                     pg.removeClass(element.querySelector(".arrow"), sOpen)
                     pg.removeClass(element.querySelector(".arrow"), sActive);
@@ -96,9 +90,9 @@ export class SideBar extends Control<ISideBarOptions> {
                         });    
                     }
                 } else {
-                    const openMenu = <HTMLLIElement>parent.querySelector("li." + sOpen);
+                    const openMenu = parent.querySelector("li." + sOpen) as HTMLLIElement;
                     if (openMenu) {
-                        const openMenuSub = <HTMLElement>openMenu.querySelector(".sub-menu");
+                        const openMenuSub = openMenu.querySelector(".sub-menu") as HTMLElement;
                         Velocity(openMenuSub, "slideUp", {
                             duration: 200,
                             complete:function() {

@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 
 const stringMobileView = 'MobileView';
 
@@ -8,7 +8,7 @@ export interface IMobileViewOptions extends IControlOptions {
 }
 
 const defaultProps: IMobileViewOptions = {
-    onNavigate: (view, animation) => {}
+    onNavigate: (_view, _animation) => {}
 };
 
 export class MobileView extends Control<IMobileViewOptions> {
@@ -20,8 +20,8 @@ export class MobileView extends Control<IMobileViewOptions> {
     private bind = () => {
         const self = this;
         if ( !(stringMobileView in self.element ) ) { // prevent adding event handlers twice
-            pg.on(self.element,'click',function(e){
-                var el = <HTMLElement>document.querySelector(this.getAttribute('data-view-port'));
+            pg.on(self.element,'click',function(_e){
+                var el = document.querySelector(this.getAttribute('data-view-port')) as HTMLElement;
                 var toViewId = this.getAttribute('data-toggle-view');
                 if (toViewId != null) {
                     // TODO verify this

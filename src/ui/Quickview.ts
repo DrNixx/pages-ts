@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 import forEach from 'lodash/forEach';
 import { Velocity } from "velocity-animate";
 
@@ -43,7 +43,7 @@ export class Quickview extends Control<IQuickviewOptions> {
     private bind = () => {
         const self = this;
         if ( !(stringQuickview in self.element ) ) { // prevent adding event handlers twice
-            pg.live('.list > ul > li', 'click', function(e) {
+            pg.live('.list > ul > li', 'click', function(_e) {
                 const note = this.querySelector('.note-preview');
                 pg.queryElement(self.options.noteEditor).innerHTML = note.innerHTML;
                 pg.toggleClass(pg.queryElement(self.options.notes), 'push');
@@ -53,8 +53,8 @@ export class Quickview extends Control<IQuickviewOptions> {
                 e.stopPropagation();
             }, pg.queryElement(this.options.notes));
         
-            pg.live(self.options.backButton, 'click', function(e) {
-                const link = <HTMLAnchorElement>pg.queryElement(self.options.notes).querySelector('.toolbar > li > a');
+            pg.live(self.options.backButton, 'click', function(_e) {
+                const link = pg.queryElement(self.options.notes).querySelector('.toolbar > li > a') as HTMLAnchorElement;
                 pg.removeClass(link, 'active');
                 pg.toggleClass(pg.queryElement(self.options.notes), 'push')
             }, pg.queryElement(this.options.notes));
@@ -63,7 +63,7 @@ export class Quickview extends Control<IQuickviewOptions> {
             pg.live(this.options.deleteNoteButton, 'click', function(e) {
                 e.preventDefault();
                 pg.toggleClass(this,'selected');
-                const checkboxes = <NodeListOf<HTMLInputElement>>pg.queryElement(self.options.notes).querySelectorAll('.list > ul > li .checkbox');
+                const checkboxes = pg.queryElement(self.options.notes).querySelectorAll('.list > ul > li .checkbox') as NodeListOf<HTMLInputElement>;
                 if (!checkboxes.length) {
                     return;
                 }
@@ -93,8 +93,8 @@ export class Quickview extends Control<IQuickviewOptions> {
                 pg.queryElement(self.options.noteEditor).innerHTML = ''
             });
         
-            pg.live(this.options.deleteNoteConfirmButton, 'click', function(e) {
-                var checked = <NodeListOf<HTMLInputElement>>pg.queryElement(self.options.notes).querySelectorAll('input[type=checkbox]:checked')
+            pg.live(this.options.deleteNoteConfirmButton, 'click', function(_e) {
+                var checked = pg.queryElement(self.options.notes).querySelectorAll('input[type=checkbox]:checked') as NodeListOf<HTMLInputElement>;
                 for (var i = 0; i < checked.length; i++) {
                     const el = pg.getClosest(checked[i], 'li');
                     if (el) {
@@ -103,7 +103,7 @@ export class Quickview extends Control<IQuickviewOptions> {
                 }
             });
         
-            pg.live('.toolbar > li > a', 'click', function(e) {
+            pg.live('.toolbar > li > a', 'click', function(_e) {
                 //e.preventDefault();
                 var command = this.getAttribute('data-action');
                 document.execCommand(command, false, null);

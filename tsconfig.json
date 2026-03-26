@@ -1,21 +1,32 @@
 {
     "compilerOptions": {
-        "moduleResolution": "node",
         "target": "ES2016",
-        "module": "commonjs",
+        "module": "ESNext",
         "lib": ["DOM", "ES2016", "DOM.iterable"],
-        "jsx": "react",
-        "esModuleInterop":true,
-        "sourceMap": true,
-        "declaration": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "moduleDetection": "force",
+        "noEmit": true,
+        "jsx": "react-jsx",
+
+        /* Linting */
         "strict": true,
         "noImplicitAny": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+        "sourceMap": true,
+        "declaration": true,
+        
+        
         "strictNullChecks": false,
         "importHelpers": true,
         "preserveConstEnums": true,
         "removeComments": false,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
         "outDir": "./lib"
     },
     "include": [

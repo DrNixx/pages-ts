@@ -5,12 +5,12 @@ export class Bootstrap {
     public static reponsiveTabs() {
         const fxTabs = document.querySelectorAll('[data-init-reponsive-tabs="dropdownfx"]');
         [].forEach.call(fxTabs, (el) => {
-            const drop = <HTMLElement>el;
+            const drop: HTMLElement = el;
             pg.addClass(drop, 'hidden-sm');
             pg.addClass(drop, 'hidden-xs');
             
-            let content = '<select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">'
-            const lis = drop.querySelectorAll('li');
+            let content = '<select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">';
+            // const lis = drop.querySelectorAll('li');
             [].forEach.call(drop.querySelectorAll('li'), (li: HTMLLIElement) => {
                 let selected = "";
 				
@@ -36,10 +36,10 @@ export class Bootstrap {
             content +='</select>'
             drop.insertAdjacentHTML('afterend', content);
 			
-            const select = <HTMLSelectElement>drop.nextSibling;
+            const select = drop.nextSibling as HTMLSelectElement;
             pg.addEvent(select, 'change', () => {
                 const optionSelected = select.querySelector("option:checked");
-                const valueSelected = (<HTMLOptionElement>optionSelected).value;
+                const valueSelected = (optionSelected as HTMLOptionElement).value;
 
                 if (valueSelected.charAt(0) == "#") {
                     const link = drop.querySelector(`a[href="${valueSelected}"], a[data-target="${valueSelected}"]`);

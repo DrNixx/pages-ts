@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 import { Velocity } from "velocity-animate";
 
 const stringNotification = 'Notification';
@@ -87,7 +87,7 @@ export class Notification extends Control<INotificationOptions> {
 
         const { element } = this;
 
-        const parentNode: HTMLElement = <HTMLElement>element.parentNode;
+        const parentNode: HTMLElement = element.parentNode as HTMLElement;
 
         const containerPosition = element.getBoundingClientRect();
         const containerHeight = element.getBoundingClientRect().height;

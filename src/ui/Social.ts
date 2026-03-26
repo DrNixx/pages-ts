@@ -1,6 +1,6 @@
 import toSafeInteger from 'lodash/toSafeInteger'; 
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 import Isotope from 'isotope-layout';
 
 const stringSocial = 'Social';
@@ -32,7 +32,6 @@ const defaultProps: ISocialOptions = {
 export class Social extends Control<ISocialOptions> {
     private readonly cover: HTMLElement = null;
     private days: NodeListOf<HTMLElement>;
-    private item: HTMLElement = null;
     private layouts: Isotope[] = [];
     private readonly status: HTMLElement = null;
     private resizeTimeout: any = null;
@@ -48,7 +47,6 @@ export class Social extends Control<ISocialOptions> {
         
         this.cover = this.element.querySelector(this.options.cover);
         this.days = this.element.querySelectorAll(this.options.day);
-        this.item = this.element.querySelector(this.options.item);
         this.status = this.element.querySelector(this.options.status);
         this.colWidth = toSafeInteger(this.options.colWidth);
         this.gutterWidth = toSafeInteger(this.options.gutterWidth);
@@ -70,7 +68,7 @@ export class Social extends Control<ISocialOptions> {
                         pg.addClass(self.status.querySelector('.status-form-inner'),'hide');
                         form.submit()
                         // show success message
-                        const finalMessage  = <HTMLElement>self.status.querySelector('.final-message');
+                        const finalMessage  = self.status.querySelector('.final-message') as HTMLElement;
                         if(finalMessage) {
                             finalMessage.innerHTML = '<i class="fa fa-check-circle-o"></i> Status updated';
                         }
@@ -144,7 +142,7 @@ export class Social extends Control<ISocialOptions> {
         [].forEach.call(socialEl, function(el: HTMLElement) {
             new Social(el, el.dataset);
             setTimeout(function() {
-                const input = <HTMLInputElement>el.querySelector('[data-social="status"] li.current input');
+                const input = el.querySelector('[data-social="status"] li.current input') as HTMLInputElement;
                 if (input) {
                     input.focus();
                 }
@@ -155,7 +153,7 @@ export class Social extends Control<ISocialOptions> {
     public static onResize() {
         const socialEl = document.querySelectorAll('[data-pages="social"]');
         [].forEach.call(socialEl, function(el: HTMLElement) {
-            const social = <Social>el[stringSocial];
+            const social = el[stringSocial] as Social;
             if (social) {
                 social.doResize();
             }
@@ -165,7 +163,7 @@ export class Social extends Control<ISocialOptions> {
     public static onFitWidth() {
         const socialEl = document.querySelectorAll('[data-pages="social"]');
         [].forEach.call(socialEl, function(el: HTMLElement) {
-            const social = <Social>el[stringSocial];
+            const social = el[stringSocial] as Social;
             if (social) {
                 social.fitContainersWidth();
             }

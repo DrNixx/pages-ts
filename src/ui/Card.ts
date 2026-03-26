@@ -1,6 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
-import { Notification } from "./Notification";
+import { Control, type IControlOptions } from "./Control";
 import { Velocity } from "velocity-animate";
 
 const stringCard = 'Card';
@@ -57,7 +56,7 @@ export class Card extends Control<ICardOptions> {
     }
 
     private isAnchor = (element: EventTarget): boolean => {
-        return (<HTMLElement>element).nodeName === 'A';
+        return (element as HTMLElement).nodeName === 'A';
     };
 
     private bind = () => {
@@ -116,7 +115,7 @@ export class Card extends Control<ICardOptions> {
 
     private collapse = () => {
         const icon = this.element.querySelector<HTMLElement>(this.options.collapseButton + ' > i');
-        const heading = this.element.querySelector('.card-header');
+        // const heading = this.element.querySelector('.card-header');
   
         if (pg.hasClass(this.element, 'card-collapsed')) {
             Velocity(this.body, "slideDown", {
@@ -160,7 +159,7 @@ export class Card extends Control<ICardOptions> {
     };
   
     private maximize = () => {
-        const icon = <HTMLElement>this.element.querySelector(this.options.maximizeButton + ' > i');
+        const icon = this.element.querySelector(this.options.maximizeButton + ' > i') as HTMLElement;
   
         if (pg.hasClass(this.element,'card-maximized')) {
             pg.removeClass(this.element,'card-maximized');
@@ -234,7 +233,7 @@ export class Card extends Control<ICardOptions> {
                 pg.addClass(toggle,'refreshing');
                 const iconOld = toggle.querySelector<HTMLElement>('i');
 
-                let iconNew = <HTMLElement>toggle.querySelector('[class$="-animated"]');
+                let iconNew = toggle.querySelector('[class$="-animated"]') as HTMLElement;
 
                 if (!iconNew) {
                     iconNew = document.createElement("i");
@@ -294,31 +293,6 @@ export class Card extends Control<ICardOptions> {
                   self.options.refresh = false;
               } 
             });
-        }
-    };
-  
-    private error = (error) => {
-        if (error) {
-            const self = this;
-  
-            new Notification(this.element, {
-                    style: 'bar',
-                    message: error,
-                    position: 'top',
-                    timeout: 0,
-                    type: 'danger',
-                    onShown: function() {
-                        const elem: HTMLElement = self.loader.querySelector(':scope > div')
-                        Velocity(elem, "fadeOut", {
-                            duration: 200,
-                            complete:function() {      
-                            }, 
-                        });
-                    },
-                    onClosed: function() {
-                        self.refresh(false)
-                    }
-            }).show();
         }
     };
 }

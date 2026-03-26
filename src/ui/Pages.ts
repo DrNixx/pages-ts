@@ -1,78 +1,78 @@
-import { DeviceSizeType } from './StyleConfig';
-import isNumber from 'lodash/isNumber'; 
+import type { DeviceSizeType } from './StyleConfig';
+import isNumber from 'lodash/isNumber';
 
 declare var ActiveXObject: (type: string) => void;
 
 //const globalObject = typeof global !== 'undefined' ? global : this || window;
-const doc = document.documentElement;
-const body = document.body;
+// const doc = document.documentElement;
+// const body = document.body;
 
 // function toggle attributes
 const 
-  dataToggle    = 'data-toggle',
-  dataInit = 'data-pages',
+  //dataToggle    = 'data-toggle',
+  // dataInit = 'data-pages',
   
   // components
-  stringSideBar = 'SideBar',
-  stringParallax = 'Parallax',
-  stringMobileView = 'MobileView',
-  stringQuickView = 'QuickView',
-  stringProgress = 'Progress',
-  stringListView = 'ListView',
-  stringCard = 'Card',
-  stringNotification = 'Notification',
+  // stringSideBar = 'SideBar',
+  // stringParallax = 'Parallax',
+  // stringMobileView = 'MobileView',
+  // stringQuickView = 'QuickView',
+  // stringProgress = 'Progress',
+  // stringListView = 'ListView',
+  // stringCard = 'Card',
+  // stringNotification = 'Notification',
   
   // event names
-  clickEvent    = 'click',
-  hoverEvent    = 'hover',
-  keydownEvent  = 'keydown',
-  resizeEvent   = 'resize',
-  scrollEvent   = 'scroll',
+  // clickEvent    = 'click',
+  // hoverEvent    = 'hover',
+  // keydownEvent  = 'keydown',
+  // resizeEvent   = 'resize',
+  // scrollEvent   = 'scroll',
 
   // originalEvents
-  showEvent     = 'show',
-  shownEvent    = 'shown',
-  hideEvent     = 'hide',
-  hiddenEvent   = 'hidden',
-  closeEvent    = 'close',
-  closedEvent   = 'closed',
-  slidEvent     = 'slid',
-  slideEvent    = 'slide',
-  changeEvent   = 'change',
+  // showEvent     = 'show',
+  // shownEvent    = 'shown',
+  // hideEvent     = 'hide',
+  // hiddenEvent   = 'hidden',
+  // closeEvent    = 'close',
+  // closedEvent   = 'closed',
+  // slidEvent     = 'slid',
+  // slideEvent    = 'slide',
+  // changeEvent   = 'change',
 
   // other
-  getAttribute            = 'getAttribute',
-  setAttribute            = 'setAttribute',
-  hasAttribute            = 'hasAttribute',
-  getElementsByTagName    = 'getElementsByTagName',
-  getBoundingClientRect   = 'getBoundingClientRect',
-  querySelectorAll        = 'querySelectorAll',
+  // getAttribute            = 'getAttribute',
+  // setAttribute            = 'setAttribute',
+  // hasAttribute            = 'hasAttribute',
+  // getElementsByTagName    = 'getElementsByTagName',
+  // getBoundingClientRect   = 'getBoundingClientRect',
+  // querySelectorAll        = 'querySelectorAll',
   getElementsByCLASSNAME  = 'getElementsByClassName',
 
-  indexOf      = 'indexOf',
-  parentNode   = 'parentNode',
-  length       = 'length',
-  toLowerCase  = 'toLowerCase',
-  Transition   = 'Transition',
-  Webkit       = 'Webkit',
-  style        = 'style',
+  // indexOf      = 'indexOf',
+  // parentNode   = 'parentNode',
+  length       = 'length'
+  // toLowerCase  = 'toLowerCase',
+  // Transition   = 'Transition',
+  // Webkit       = 'Webkit',
+  // style        = 'style',
 
-  active     = 'active',
-  showClass  = 'show',
+  // active     = 'active',
+  // showClass  = 'show',
 
   // modal
-  modalOverlay = 0;
+  // modalOverlay = 0;
 
 
 export class Pages {
-    private pageScrollElement: string;
+    //private pageScrollElement: string;
     private readonly body: HTMLBodyElement;
 
     public VERSION = "5.0.0";
     public SUPPORT = "support@chess-online.com";
 
     constructor() {
-        this.pageScrollElement = 'html, body';
+        //this.pageScrollElement = 'html, body';
         this.body = document.getElementsByTagName('body')[0];
         this.init();
     }
@@ -129,7 +129,7 @@ export class Pages {
      * @param elem {HTMLElement}
      */
     private getCurrentStyle(elem: HTMLElement): CSSStyleDeclaration {
-        return window.getComputedStyle ? window.getComputedStyle(elem) : <CSSStyleDeclaration>elem['currentStyle'];
+        return window.getComputedStyle ? window.getComputedStyle(elem) : elem['currentStyle'] as CSSStyleDeclaration;
     }
 
     /** 
@@ -246,7 +246,7 @@ export class Pages {
     }
 
     // Init DATA API
-    public initializeDataAPI = (component, constructor, collection) => {
+    public initializeDataAPI = (_component, constructor, collection) => {
         for (let i = 0; i < collection[length]; i++) {
             new constructor(collection[i]);
         }
@@ -337,7 +337,7 @@ export class Pages {
 
     public queryElements(selector: any, parent?: Element|Document): HTMLElement[] {
         const lookUp = parent ? parent : document;
-        return <HTMLElement[]>[].slice.call(lookUp.querySelectorAll(selector));
+        return [].slice.call(lookUp.querySelectorAll(selector));
     }
 
     public getClosest(elem: Node, selector) {
@@ -358,8 +358,8 @@ export class Pages {
 
         // Get the closest match
         for ( ; elem && elem !== document; elem = elem.parentNode ) {
-            if ((<Element>elem).matches( selector)) {
-                return <Element>elem;
+            if ((elem as Element).matches( selector)) {
+                return elem as Element;
             }
         }
 

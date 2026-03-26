@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 
 const stringSelect = 'SelectFx';
 
@@ -50,7 +50,7 @@ export class Select extends Control<ISelectOptions> {
     private bind = () => {
         const self = this;
         if ( !(stringSelect in self.element ) ) { // prevent adding event handlers twice
-            const select: HTMLSelectElement = <HTMLSelectElement>this.element;
+            const select: HTMLSelectElement = this.element as HTMLSelectElement;
 
             // check if we are using a placeholder for the native select box
             // we assume the placeholder is disabled and selected by default
@@ -81,9 +81,9 @@ export class Select extends Control<ISelectOptions> {
             this.initEvents();
 
             this.element.onchange = function() {
-                const select = <HTMLSelectElement>this;
-                const index = select.selectedIndex;
-                const inputText = select.children[index].innerHTML.trim();
+                // const select = this as HTMLSelectElement;
+                // const index = select.selectedIndex;
+                // const inputText = select.children[index].innerHTML.trim();
             }
 
             self.element[stringSelect] = self;
@@ -149,7 +149,7 @@ export class Select extends Control<ISelectOptions> {
             const tag = el.tagName.toLowerCase();
 
             if (tag === 'option') {
-                options += createOptionHTML(<HTMLOptionElement>el);
+                options += createOptionHTML(el as HTMLOptionElement);
             } else if (tag === 'optgroup') {
                 options += '<li class="cs-optgroup"><span>' + el.label + '</span><ul>';
                 [].slice.call(el.children).forEach(function(opt: HTMLOptionElement) {
@@ -313,7 +313,7 @@ export class Select extends Control<ISelectOptions> {
 
             // Hack for FF
             // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
-            const x = this.selEl.clientHeight;
+            // const x = this.selEl.clientHeight;
 
             // reset backdrop
             backdrop.style.transform = 
@@ -330,7 +330,7 @@ export class Select extends Control<ISelectOptions> {
             csOptions.style.overflowY = 'hidden';
             csOptions.style.width = 'auto';
 
-            const parentFormGroup = <HTMLElement>pg.getClosest(this.selEl, '.form-group');
+            const parentFormGroup = pg.getClosest(this.selEl, '.form-group') as HTMLElement;
             if (parentFormGroup) {
                 pg.removeClass(parentFormGroup, 'focused');
             }
@@ -341,7 +341,7 @@ export class Select extends Control<ISelectOptions> {
             }
 
             let dummy: HTMLElement;
-            const parentNode = <HTMLElement>this.selEl.parentNode;
+            const parentNode = this.selEl.parentNode as HTMLElement;
             if (parentNode.querySelector('.dropdown-placeholder')) {
                 dummy = parentNode.querySelector('.dropdown-placeholder');
             } else {
@@ -372,11 +372,11 @@ export class Select extends Control<ISelectOptions> {
             const contentHeight = csOptions.offsetHeight;
             const originalHeight = csPlaceholder.offsetHeight;
 
-            const contentWidth = csOptions.offsetWidth;
-            const originalWidth = csPlaceholder.offsetWidth;
+            // const contentWidth = csOptions.offsetWidth;
+            // const originalWidth = csPlaceholder.offsetWidth;
 
             const scaleV = contentHeight / originalHeight;
-            const scaleH = (contentWidth > originalWidth) ? contentWidth / originalWidth : 1.05;
+            // const scaleH = (contentWidth > originalWidth) ? contentWidth / originalWidth : 1.05;
             //backdrop.style.transform = backdrop.style.webkitTransform = backdrop.style.MozTransform = backdrop.style.msTransform = backdrop.style.OTransform = 'scale3d(' + scaleH + ', ' + scaleV + ', 1)';
             backdrop.style.transform = 
                 backdrop.style.webkitTransform = 
@@ -424,7 +424,7 @@ export class Select extends Control<ISelectOptions> {
         this.selPlaceholder.textContent = opt.textContent;
 
         // change native select element´s value
-        (<HTMLSelectElement>this.element).value = opt.getAttribute('data-value');
+        (this.element as HTMLSelectElement).value = opt.getAttribute('data-value');
 
         // remove class cs-selected from old selected option and add it to current selected option
         const oldOpt: HTMLLIElement = this.selEl.querySelector('li.cs-selected');

@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 
 const stringParallax = 'Parallax';
 
@@ -67,7 +67,7 @@ export class Parallax extends Control<IParallaxOptions> {
         }
     };
 
-    public animate = (e: Event) => {
+    public animate = (_e: Event) => {
         const self = this;
         let scrollPos: number;
         if (self.options.scrollElement === 'window'){

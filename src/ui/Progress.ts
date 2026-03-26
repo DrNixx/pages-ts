@@ -1,5 +1,5 @@
 import { pg } from "./Pages";
-import { Control, IControlOptions } from "./Control";
+import { Control, type IControlOptions } from "./Control";
 
 const stringProgress = 'Progress';
 
@@ -22,9 +22,12 @@ export class Progress extends Control<IProgressOptions> {
     pie: HTMLDivElement;
     value: number;
     private container: HTMLDivElement;
+    public element: HTMLInputElement;
 
-    constructor (public element: HTMLInputElement, options: IProgressOptions) {
+    constructor (element: HTMLInputElement, options: IProgressOptions) {
         super(element, options, defaultProps);
+
+        this.element = element;
 
         const self = this;
 
@@ -86,8 +89,8 @@ export class Progress extends Control<IProgressOptions> {
         const self = this;
 
         if ( !(stringProgress in self.element ) ) { // prevent adding event handlers twice
-            pg.on(self.element, 'input', function(e) {
-                self.setValue(parseInt((<HTMLInputElement>this).value));
+            pg.on(self.element, 'input', function(_e) {
+                self.setValue(parseInt((this as HTMLInputElement).value));
             });
 
             self.element[stringProgress] = self;
